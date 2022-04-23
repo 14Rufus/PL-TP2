@@ -4,14 +4,28 @@ import sys
 from sqlalchemy import literal
 
 
-tokens = ['LEX_T', 'IGUAL', 'PERCENTAGEM', 'PARRETOA', 'PARRETOF','ASPAS', 'PLICA', 'LITERALS_T','IGNORE_T', 'TOKENS_T', 'PALM', 'SPECIAL', 'SIMBOLO', 'REGEX', 'RETURN', 'ERROR'] 
+tokens = ['LEX_T', 'YACC_T', 'LEFT', 'RIGHT', 'CARD', 'TS', 
+            'CHAV_A', 'SYMBOLTABLE_T', 'NEG', 'UMINUS', 'CHAV_F', 
+            'PERCENTAGEM', 'PARRETOA', 'PARRETOF', 'ASPAS', 'STAT', 'EXP', 
+            'PRECEDENCE_T','PLICA', 'LITERALS_T', 'IGNORE_T', 'TOKENS_T', 
+            'PALM', 'SPECIAL', 'REGEX', 'RETURN', 'ERROR'] 
 
 
 
-literals = ['+','-','*','/', '%', '(', ')', ',', '.', '=']
+literals = ['+','-','*','/', '%', '(', ')', ',', '.', '=', ':']
 
 def t_LEX_T(t):
     r'LEX'
+    t.value = str(t.value)
+    return t
+
+def t_YACC_T(t):
+    r'YACC'
+    t.value = str(t.value)
+    return t
+
+def t_PRECEDENCE_T(t):
+    r'precedence\ *'
     t.value = str(t.value)
     return t
 
@@ -29,6 +43,48 @@ def t_PARRETOF(t):
     r'\]'
     t.value = str(t.value)
     return t
+
+def t_LEFT(t):
+    r'left'
+    t.value = str(t.value)
+    return t
+
+def t_RIGHT(t):
+    r'right'
+    t.value = str(t.value)
+    return t
+
+def t_CARD(t):
+    r'\#'
+    t.value = str(t.value)
+    return t
+
+def t_SYMBOLTABLE_T(t):
+    r'symboltable\ *'
+    t.value = str(t.value)
+    return t
+
+def t_NEG(t): #trquei o %prec por %neg para nao dar conflito com o %precedence
+    r'neg\ *'
+    t.value = str(t.value)
+    return t
+
+def t_UMINUS(t):
+    r'UMINUS\ *'
+    t.value = str(t.value)
+    return t
+
+def t_STAT(t):
+    r'stat\ *'
+    t.value = str(t.value)
+    return t
+
+
+def t_EXP(t):
+    r'exp\ *'
+    t.value = str(t.value)
+    return t
+
 
 #def t_IGUAL(t):
 #    r'='
@@ -70,6 +126,21 @@ def t_SPECIAL(t):  #\t \n ou espaço
     t.value = str(t.value)
     return t
 
+def t_TS(t):  #\t \n ou espaço
+    r'ts'
+    t.value = str(t.value)
+    return t
+
+def t_CHAV_A(t):  #\t \n ou espaço
+    r'{'
+    t.value = str(t.value)
+    return t
+
+def t_CHAV_F(t):  #\t \n ou espaço
+    r'}'
+    t.value = str(t.value)
+    return t
+
 #def t_SIMBOLO(t):
 #    r'[+\-*/.:;_,=[]&/()\\{}\\]' 
 #    t.value = str(t.value)
@@ -77,8 +148,9 @@ def t_SPECIAL(t):  #\t \n ou espaço
 
 def t_REGEX(t): #regex para reconhecer uma regex valida
     #r'^((?:(?:[^?+*{}()[\]\\|]+|\\.|\[(?:\^?\\.|\^[^\\]|[^\\^])(?:[^\]\\]+|\\.)*\]|\((?:\?[:=!]|\?<[=!]|\?>)?\(?1\)??\)|\(\?(?:R|[+-]?\d+)\))(?:(?:[?+*]|\{\d*(?:,\d*)?\})[?+]?)?|\|)*)$'
-    #r'([A-Z])\w+'
+    #r'[?\w+]?\w+'
     r'ç'
+    #r'.+'
     t.value = str(t.value)
     return t
 

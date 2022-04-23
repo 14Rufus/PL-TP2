@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "ASPAS ERROR IGNORE_T IGUAL LEX_T LITERALS_T PALM PARRETOA PARRETOF PERCENTAGEM PLICA REGEX RETURN SIMBOLO SPECIAL TOKENS_Tbody : lexlex : PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras literals : PERCENTAGEM LITERALS_T '=' ASPAS simbolos ASPASsimbolos : simbolos simbolosimbolo : '+'\n               | '-'\n               | '*'\n               | '/'\n               | '='\n               | '('\n               | ')'\n               |\n    simbolos : ignore : PERCENTAGEM IGNORE_T '=' ASPAS especiais ASPASespeciais : especiais SPECIALespeciais : tokens : PERCENTAGEM TOKENS_T '=' PARRETOA listatokens PARRETOFtokens : listatokens : PLICA PALM PLICA listatokens : listatokens ',' PLICA PALM PLICA  regra : REGEX RETURN '(' ')'regra : REGEX ERROR '(' ')'regras : regras regraregras : "
+_lr_signature = "ASPAS CARD CHAV_A CHAV_F ERROR EXP IGNORE_T LEFT LEX_T LITERALS_T NEG PALM PARRETOA PARRETOF PERCENTAGEM PLICA PRECEDENCE_T REGEX RETURN RIGHT SPECIAL STAT SYMBOLTABLE_T TOKENS_T TS UMINUS YACC_Tbody : lex yacclex : PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l literals : PERCENTAGEM LITERALS_T '=' ASPAS simbolos ASPASsimbolos : simbolos simbolosimbolo : '+'\n               | '-'\n               | '*'\n               | '/'\n               | '='\n               | '('\n               | ')'\n               |\n    simbolos : ignore : PERCENTAGEM IGNORE_T '=' ASPAS especiais ASPASespeciais : especiais SPECIALespeciais : tokens : PERCENTAGEM TOKENS_T '=' PARRETOA listatokens PARRETOFtokens : listatokens : PLICA PALM PLICA listatokens : listatokens ',' PLICA PALM PLICA  regra_l : REGEX RETURN '(' ')'regra_l : REGEX ERROR '(' ')'regras_l : regras_l regra_lregras_l : yacc : PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_yprecedence : PERCENTAGEM PRECEDENCE_T '=' PARRETOA conteudo_prec PARRETOFconteudo_prec : tuplo ',' tuplo ',' tuplo_2 ','tuplo : '(' lado ',' PLICA simbolo PLICA ',' PLICA simbolo PLICA ')'tuplo_2 : '(' lado ',' PLICA UMINUS PLICA ')'lado : PLICA LEFT PLICAlado : PLICA RIGHT PLICAsymboltable : TS '=' CHAV_A CHAV_Fregras_y : STAT ':' PALM PLICA '=' PLICA EXP CHAV_A CHAV_Fregras_y : STAT ':' EXP CHAV_A CHAV_Fregras_y : EXP ':' EXP PLICA '+' PLICA EXP CHAV_A CHAV_Fregras_y : EXP ':' EXP PLICA '-' PLICA EXP CHAV_A CHAV_Fregras_y : EXP ':' EXP PLICA '*' PLICA EXP CHAV_A CHAV_Fregras_y : EXP ':' EXP PLICA '/' PLICA EXP CHAV_A CHAV_Fregras_y : EXP ':' PLICA '-' PLICA EXP PERCENTAGEM NEG UMINUS CHAV_A CHAV_Fregras_y : EXP ':' PLICA '(' PLICA EXP PLICA ')' PLICA CHAV_A CHAV_Fregras_y : EXP ':' PALM CHAV_A CHAV_F"
     
-_lr_action_items = {'PERCENTAGEM':([0,3,5,7,10,25,37,],[3,4,6,9,13,-3,-14,]),'$end':([1,2,10,14,18,22,37,43,46,47,],[0,-1,-18,-24,-2,-23,-14,-17,-21,-22,]),'LEX_T':([4,],[5,]),'LITERALS_T':([6,],[8,]),'=':([8,12,15,17,19,24,26,27,28,29,30,31,32,],[11,16,-13,21,24,-9,-4,-5,-6,-7,-8,-10,-11,]),'IGNORE_T':([9,],[12,]),'REGEX':([10,14,18,22,37,43,46,47,],[-18,-24,23,-23,-14,-17,-21,-22,]),'ASPAS':([11,15,16,19,20,24,26,27,28,29,30,31,32,33,38,],[15,-13,20,25,-16,-9,-4,-5,-6,-7,-8,-10,-11,37,-15,]),'TOKENS_T':([13,],[17,]),'+':([15,19,24,26,27,28,29,30,31,32,],[-13,27,-9,-4,-5,-6,-7,-8,-10,-11,]),'-':([15,19,24,26,27,28,29,30,31,32,],[-13,28,-9,-4,-5,-6,-7,-8,-10,-11,]),'*':([15,19,24,26,27,28,29,30,31,32,],[-13,29,-9,-4,-5,-6,-7,-8,-10,-11,]),'/':([15,19,24,26,27,28,29,30,31,32,],[-13,30,-9,-4,-5,-6,-7,-8,-10,-11,]),'(':([15,19,24,26,27,28,29,30,31,32,35,36,],[-13,31,-9,-4,-5,-6,-7,-8,-10,-11,41,42,]),')':([15,19,24,26,27,28,29,30,31,32,41,42,],[-13,32,-9,-4,-5,-6,-7,-8,-10,-11,46,47,]),'SPECIAL':([20,33,38,],[-16,38,-15,]),'PARRETOA':([21,],[34,]),'RETURN':([23,],[35,]),'ERROR':([23,],[36,]),'PLICA':([34,44,45,50,],[40,48,49,51,]),'PARRETOF':([39,49,51,],[43,-19,-20,]),',':([39,49,51,],[44,-19,-20,]),'PALM':([40,48,],[45,50,]),}
+_lr_action_items = {'PERCENTAGEM':([0,2,3,5,8,9,11,16,23,32,40,52,74,93,96,97,107,],[3,5,6,7,10,12,15,22,-24,-2,-23,-3,-14,-17,-21,-22,119,]),'$end':([1,4,25,85,92,135,136,137,138,139,148,149,],[0,-1,-25,-34,-41,-33,-35,-36,-37,-38,-39,-40,]),'LEX_T':([6,],[8,]),'YACC_T':([7,],[9,]),'LITERALS_T':([10,],[14,]),'PRECEDENCE_T':([12,],[17,]),'TS':([13,64,],[19,-26,]),'=':([14,17,19,21,29,31,37,51,53,54,55,56,57,58,59,68,99,143,],[20,24,28,30,-13,39,51,-9,-4,-5,-6,-7,-8,-10,-11,84,51,51,]),'IGNORE_T':([15,],[21,]),'REGEX':([16,23,32,40,74,93,96,97,],[-18,-24,41,-23,-14,-17,-21,-22,]),'STAT':([18,50,],[26,-32,]),'EXP':([18,34,35,50,90,91,102,103,104,105,106,],[27,46,47,-32,107,108,114,115,116,117,118,]),'ASPAS':([20,29,30,37,38,51,53,54,55,56,57,58,59,60,75,],[29,-13,38,52,-16,-9,-4,-5,-6,-7,-8,-10,-11,74,-15,]),'TOKENS_T':([22,],[31,]),'PARRETOA':([24,39,],[33,61,]),':':([26,27,],[34,35,]),'CHAV_A':([28,46,49,114,115,116,117,118,140,141,],[36,69,73,125,126,127,128,129,144,145,]),'+':([29,37,51,53,54,55,56,57,58,59,70,99,143,],[-13,54,-9,-4,-5,-6,-7,-8,-10,-11,86,54,54,]),'-':([29,37,48,51,53,54,55,56,57,58,59,70,99,143,],[-13,55,71,-9,-4,-5,-6,-7,-8,-10,-11,87,55,55,]),'*':([29,37,51,53,54,55,56,57,58,59,70,99,143,],[-13,56,-9,-4,-5,-6,-7,-8,-10,-11,88,56,56,]),'/':([29,37,51,53,54,55,56,57,58,59,70,99,143,],[-13,57,-9,-4,-5,-6,-7,-8,-10,-11,89,57,57,]),'(':([29,33,37,48,51,53,54,55,56,57,58,59,62,63,65,98,99,143,],[-13,44,58,72,-9,-4,-5,-6,-7,-8,-10,-11,78,79,44,112,58,58,]),')':([29,37,51,53,54,55,56,57,58,59,78,79,99,120,143,150,151,],[-13,59,-9,-4,-5,-6,-7,-8,-10,-11,96,97,59,131,59,152,153,]),'PALM':([34,35,77,109,],[45,49,95,121,]),'PLICA':([35,44,45,47,51,54,55,56,57,58,59,61,71,72,81,82,83,84,86,87,88,89,94,95,99,108,112,113,121,131,133,134,143,146,147,],[48,67,68,70,-9,-5,-6,-7,-8,-10,-11,77,90,91,99,100,101,102,103,104,105,106,109,110,-12,120,67,124,132,141,142,143,-12,150,151,]),'CHAV_F':([36,69,73,125,126,127,128,129,144,145,],[50,85,92,135,136,137,138,139,148,149,]),'SPECIAL':([38,60,75,],[-16,75,-15,]),'RETURN':([41,],[62,]),'ERROR':([41,],[63,]),'PARRETOF':([42,76,110,122,132,],[64,93,-19,-27,-20,]),',':([43,66,76,80,100,101,110,111,123,124,132,152,153,],[65,81,94,98,-30,-31,-19,122,133,134,-20,-29,-28,]),'LEFT':([67,],[82,]),'RIGHT':([67,],[83,]),'NEG':([119,],[130,]),'UMINUS':([130,142,],[140,146,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'body':([0,],[1,]),'lex':([0,],[2,]),'literals':([5,],[7,]),'ignore':([7,],[10,]),'tokens':([10,],[14,]),'regras':([14,],[18,]),'simbolos':([15,],[19,]),'regra':([18,],[22,]),'simbolo':([19,],[26,]),'especiais':([20,],[33,]),'listatokens':([34,],[39,]),}
+_lr_goto_items = {'body':([0,],[1,]),'lex':([0,],[2,]),'yacc':([2,],[4,]),'literals':([8,],[11,]),'precedence':([9,],[13,]),'ignore':([11,],[16,]),'symboltable':([13,],[18,]),'tokens':([16,],[23,]),'regras_y':([18,],[25,]),'regras_l':([23,],[32,]),'simbolos':([29,],[37,]),'regra_l':([32,],[40,]),'conteudo_prec':([33,],[42,]),'tuplo':([33,65,],[43,80,]),'simbolo':([37,99,143,],[53,113,147,]),'especiais':([38,],[60,]),'lado':([44,112,],[66,123,]),'listatokens':([61,],[76,]),'tuplo_2':([98,],[111,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,28 +27,45 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> body","S'",1,None,None,None),
-  ('body -> lex','body',1,'p_body','compiler_yacc.py',7),
-  ('lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras','lex',7,'p_lex','compiler_yacc.py',10),
-  ('literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS','literals',6,'p_literals','compiler_yacc.py',13),
-  ('simbolos -> simbolos simbolo','simbolos',2,'p_simbolos','compiler_yacc.py',16),
-  ('simbolo -> +','simbolo',1,'p_simbolo','compiler_yacc.py',19),
-  ('simbolo -> -','simbolo',1,'p_simbolo','compiler_yacc.py',20),
-  ('simbolo -> *','simbolo',1,'p_simbolo','compiler_yacc.py',21),
-  ('simbolo -> /','simbolo',1,'p_simbolo','compiler_yacc.py',22),
-  ('simbolo -> =','simbolo',1,'p_simbolo','compiler_yacc.py',23),
-  ('simbolo -> (','simbolo',1,'p_simbolo','compiler_yacc.py',24),
-  ('simbolo -> )','simbolo',1,'p_simbolo','compiler_yacc.py',25),
-  ('simbolo -> <empty>','simbolo',0,'p_simbolo','compiler_yacc.py',26),
-  ('simbolos -> <empty>','simbolos',0,'p_simbolos_vazio','compiler_yacc.py',31),
-  ('ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS','ignore',6,'p_ignore','compiler_yacc.py',34),
-  ('especiais -> especiais SPECIAL','especiais',2,'p_especiais','compiler_yacc.py',37),
-  ('especiais -> <empty>','especiais',0,'p_especiais_vazio','compiler_yacc.py',40),
-  ('tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF','tokens',6,'p_tokens','compiler_yacc.py',43),
-  ('tokens -> <empty>','tokens',0,'p_tokens_vazio','compiler_yacc.py',46),
-  ('listatokens -> PLICA PALM PLICA','listatokens',3,'p_listatokens_simples','compiler_yacc.py',49),
-  ('listatokens -> listatokens , PLICA PALM PLICA','listatokens',5,'p_listatokens_recursivo','compiler_yacc.py',52),
-  ('regra -> REGEX RETURN ( )','regra',4,'p_regra_return','compiler_yacc.py',55),
-  ('regra -> REGEX ERROR ( )','regra',4,'p_regra_error','compiler_yacc.py',58),
-  ('regras -> regras regra','regras',2,'p_regras','compiler_yacc.py',61),
-  ('regras -> <empty>','regras',0,'p_regras_vazio','compiler_yacc.py',64),
+  ('body -> lex yacc','body',2,'p_body','compiler_yacc.py',7),
+  ('lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l','lex',7,'p_lex','compiler_yacc.py',13),
+  ('literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS','literals',6,'p_literals','compiler_yacc.py',16),
+  ('simbolos -> simbolos simbolo','simbolos',2,'p_simbolos','compiler_yacc.py',19),
+  ('simbolo -> +','simbolo',1,'p_simbolo','compiler_yacc.py',22),
+  ('simbolo -> -','simbolo',1,'p_simbolo','compiler_yacc.py',23),
+  ('simbolo -> *','simbolo',1,'p_simbolo','compiler_yacc.py',24),
+  ('simbolo -> /','simbolo',1,'p_simbolo','compiler_yacc.py',25),
+  ('simbolo -> =','simbolo',1,'p_simbolo','compiler_yacc.py',26),
+  ('simbolo -> (','simbolo',1,'p_simbolo','compiler_yacc.py',27),
+  ('simbolo -> )','simbolo',1,'p_simbolo','compiler_yacc.py',28),
+  ('simbolo -> <empty>','simbolo',0,'p_simbolo','compiler_yacc.py',29),
+  ('simbolos -> <empty>','simbolos',0,'p_simbolos_vazio','compiler_yacc.py',34),
+  ('ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS','ignore',6,'p_ignore','compiler_yacc.py',37),
+  ('especiais -> especiais SPECIAL','especiais',2,'p_especiais','compiler_yacc.py',40),
+  ('especiais -> <empty>','especiais',0,'p_especiais_vazio','compiler_yacc.py',43),
+  ('tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF','tokens',6,'p_tokens','compiler_yacc.py',46),
+  ('tokens -> <empty>','tokens',0,'p_tokens_vazio','compiler_yacc.py',49),
+  ('listatokens -> PLICA PALM PLICA','listatokens',3,'p_listatokens_simples','compiler_yacc.py',52),
+  ('listatokens -> listatokens , PLICA PALM PLICA','listatokens',5,'p_listatokens_recursivo','compiler_yacc.py',55),
+  ('regra_l -> REGEX RETURN ( )','regra_l',4,'p_regra_return','compiler_yacc.py',58),
+  ('regra_l -> REGEX ERROR ( )','regra_l',4,'p_regra_error','compiler_yacc.py',61),
+  ('regras_l -> regras_l regra_l','regras_l',2,'p_regras_l','compiler_yacc.py',64),
+  ('regras_l -> <empty>','regras_l',0,'p_regras_vazio','compiler_yacc.py',67),
+  ('yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y','yacc',6,'p_yacc','compiler_yacc.py',72),
+  ('precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF','precedence',6,'p_precedence','compiler_yacc.py',75),
+  ('conteudo_prec -> tuplo , tuplo , tuplo_2 ,','conteudo_prec',6,'p_conteudo_prec','compiler_yacc.py',78),
+  ('tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA )','tuplo',11,'p_tuplo','compiler_yacc.py',81),
+  ('tuplo_2 -> ( lado , PLICA UMINUS PLICA )','tuplo_2',7,'p_tuplo_2','compiler_yacc.py',84),
+  ('lado -> PLICA LEFT PLICA','lado',3,'p_lado_l','compiler_yacc.py',87),
+  ('lado -> PLICA RIGHT PLICA','lado',3,'p_lado_r','compiler_yacc.py',90),
+  ('symboltable -> TS = CHAV_A CHAV_F','symboltable',4,'p_symboltable','compiler_yacc.py',93),
+  ('regras_y -> STAT : PALM PLICA = PLICA EXP CHAV_A CHAV_F','regras_y',9,'p_regras_stat','compiler_yacc.py',98),
+  ('regras_y -> STAT : EXP CHAV_A CHAV_F','regras_y',5,'p_regras_stat_e','compiler_yacc.py',101),
+  ('regras_y -> EXP : EXP PLICA + PLICA EXP CHAV_A CHAV_F','regras_y',9,'p_regras_exp_add','compiler_yacc.py',105),
+  ('regras_y -> EXP : EXP PLICA - PLICA EXP CHAV_A CHAV_F','regras_y',9,'p_regras_exp_sub','compiler_yacc.py',108),
+  ('regras_y -> EXP : EXP PLICA * PLICA EXP CHAV_A CHAV_F','regras_y',9,'p_regras_exp_mul','compiler_yacc.py',111),
+  ('regras_y -> EXP : EXP PLICA / PLICA EXP CHAV_A CHAV_F','regras_y',9,'p_regras_exp_div','compiler_yacc.py',114),
+  ('regras_y -> EXP : PLICA - PLICA EXP PERCENTAGEM NEG UMINUS CHAV_A CHAV_F','regras_y',11,'p_regras_exp_uminus','compiler_yacc.py',117),
+  ('regras_y -> EXP : PLICA ( PLICA EXP PLICA ) PLICA CHAV_A CHAV_F','regras_y',11,'p_regras_exp_par','compiler_yacc.py',120),
+  ('regras_y -> EXP : PALM CHAV_A CHAV_F','regras_y',5,'p_regras_exp_num','compiler_yacc.py',123),
 ]

@@ -1,0 +1,26 @@
+%%LEX
+%literals = "+-/*=()"
+%ignore = " \t\n"
+%tokens = [ 'VAR','NUMBER' ]
+ç return()
+ç return()
+ç error()
+
+%% YACC
+%precedence = [
+('left’,'+','-'),
+(’left’,'*','/'),
+(’right’,’UMINUS’),
+]
+# symboltable : dictionary of variables
+ts = { }
+stat : VAR '=' exp { }
+stat : exp { }
+exp : exp '+' exp { }
+exp : exp '-' exp { }
+exp : exp '*' exp { }
+exp : exp '/' exp { }
+exp : '-' exp %neg UMINUS { }
+exp : '(' exp ')' { }
+exp : NUMBER { }
+exp : VAR { }
