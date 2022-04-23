@@ -1,0 +1,596 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    IGUAL
+    SIMBOLO
+
+Grammar
+
+Rule 0     S' -> body
+Rule 1     body -> lex
+Rule 2     lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras
+Rule 3     literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS
+Rule 4     simbolos -> simbolos simbolo
+Rule 5     simbolo -> +
+Rule 6     simbolo -> -
+Rule 7     simbolo -> *
+Rule 8     simbolo -> /
+Rule 9     simbolo -> =
+Rule 10    simbolo -> (
+Rule 11    simbolo -> )
+Rule 12    simbolo -> <empty>
+Rule 13    simbolos -> <empty>
+Rule 14    ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS
+Rule 15    especiais -> especiais SPECIAL
+Rule 16    especiais -> <empty>
+Rule 17    tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF
+Rule 18    tokens -> <empty>
+Rule 19    listatokens -> PLICA PALM PLICA
+Rule 20    listatokens -> listatokens , PLICA PALM PLICA
+Rule 21    regra -> REGEX RETURN ( )
+Rule 22    regra -> REGEX ERROR ( )
+Rule 23    regras -> regras regra
+Rule 24    regras -> <empty>
+
+Terminals, with rules where they appear
+
+(                    : 10 21 22
+)                    : 11 21 22
+*                    : 7
++                    : 5
+,                    : 20
+-                    : 6
+/                    : 8
+=                    : 3 9 14 17
+ASPAS                : 3 3 14 14
+ERROR                : 22
+IGNORE_T             : 14
+IGUAL                : 
+LEX_T                : 2
+LITERALS_T           : 3
+PALM                 : 19 20
+PARRETOA             : 17
+PARRETOF             : 17
+PERCENTAGEM          : 2 2 3 14 17
+PLICA                : 19 19 20 20
+REGEX                : 21 22
+RETURN               : 21
+SIMBOLO              : 
+SPECIAL              : 15
+TOKENS_T             : 17
+error                : 
+
+Nonterminals, with rules where they appear
+
+body                 : 0
+especiais            : 14 15
+ignore               : 2
+lex                  : 1
+listatokens          : 17 20
+literals             : 2
+regra                : 23
+regras               : 2 23
+simbolo              : 4
+simbolos             : 3 4
+tokens               : 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . body
+    (1) body -> . lex
+    (2) lex -> . PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras
+
+    PERCENTAGEM     shift and go to state 3
+
+    body                           shift and go to state 1
+    lex                            shift and go to state 2
+
+state 1
+
+    (0) S' -> body .
+
+
+
+state 2
+
+    (1) body -> lex .
+
+    $end            reduce using rule 1 (body -> lex .)
+
+
+state 3
+
+    (2) lex -> PERCENTAGEM . PERCENTAGEM LEX_T literals ignore tokens regras
+
+    PERCENTAGEM     shift and go to state 4
+
+
+state 4
+
+    (2) lex -> PERCENTAGEM PERCENTAGEM . LEX_T literals ignore tokens regras
+
+    LEX_T           shift and go to state 5
+
+
+state 5
+
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T . literals ignore tokens regras
+    (3) literals -> . PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS
+
+    PERCENTAGEM     shift and go to state 6
+
+    literals                       shift and go to state 7
+
+state 6
+
+    (3) literals -> PERCENTAGEM . LITERALS_T = ASPAS simbolos ASPAS
+
+    LITERALS_T      shift and go to state 8
+
+
+state 7
+
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals . ignore tokens regras
+    (14) ignore -> . PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS
+
+    PERCENTAGEM     shift and go to state 9
+
+    ignore                         shift and go to state 10
+
+state 8
+
+    (3) literals -> PERCENTAGEM LITERALS_T . = ASPAS simbolos ASPAS
+
+    =               shift and go to state 11
+
+
+state 9
+
+    (14) ignore -> PERCENTAGEM . IGNORE_T = ASPAS especiais ASPAS
+
+    IGNORE_T        shift and go to state 12
+
+
+state 10
+
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore . tokens regras
+    (17) tokens -> . PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF
+    (18) tokens -> .
+
+    PERCENTAGEM     shift and go to state 13
+    REGEX           reduce using rule 18 (tokens -> .)
+    $end            reduce using rule 18 (tokens -> .)
+
+    tokens                         shift and go to state 14
+
+state 11
+
+    (3) literals -> PERCENTAGEM LITERALS_T = . ASPAS simbolos ASPAS
+
+    ASPAS           shift and go to state 15
+
+
+state 12
+
+    (14) ignore -> PERCENTAGEM IGNORE_T . = ASPAS especiais ASPAS
+
+    =               shift and go to state 16
+
+
+state 13
+
+    (17) tokens -> PERCENTAGEM . TOKENS_T = PARRETOA listatokens PARRETOF
+
+    TOKENS_T        shift and go to state 17
+
+
+state 14
+
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens . regras
+    (23) regras -> . regras regra
+    (24) regras -> .
+
+    REGEX           reduce using rule 24 (regras -> .)
+    $end            reduce using rule 24 (regras -> .)
+
+    regras                         shift and go to state 18
+
+state 15
+
+    (3) literals -> PERCENTAGEM LITERALS_T = ASPAS . simbolos ASPAS
+    (4) simbolos -> . simbolos simbolo
+    (13) simbolos -> .
+
+    ASPAS           reduce using rule 13 (simbolos -> .)
+    +               reduce using rule 13 (simbolos -> .)
+    -               reduce using rule 13 (simbolos -> .)
+    *               reduce using rule 13 (simbolos -> .)
+    /               reduce using rule 13 (simbolos -> .)
+    =               reduce using rule 13 (simbolos -> .)
+    (               reduce using rule 13 (simbolos -> .)
+    )               reduce using rule 13 (simbolos -> .)
+
+    simbolos                       shift and go to state 19
+
+state 16
+
+    (14) ignore -> PERCENTAGEM IGNORE_T = . ASPAS especiais ASPAS
+
+    ASPAS           shift and go to state 20
+
+
+state 17
+
+    (17) tokens -> PERCENTAGEM TOKENS_T . = PARRETOA listatokens PARRETOF
+
+    =               shift and go to state 21
+
+
+state 18
+
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras .
+    (23) regras -> regras . regra
+    (21) regra -> . REGEX RETURN ( )
+    (22) regra -> . REGEX ERROR ( )
+
+    $end            reduce using rule 2 (lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras .)
+    REGEX           shift and go to state 23
+
+    regra                          shift and go to state 22
+
+state 19
+
+    (3) literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos . ASPAS
+    (4) simbolos -> simbolos . simbolo
+    (5) simbolo -> . +
+    (6) simbolo -> . -
+    (7) simbolo -> . *
+    (8) simbolo -> . /
+    (9) simbolo -> . =
+    (10) simbolo -> . (
+    (11) simbolo -> . )
+    (12) simbolo -> .
+
+  ! shift/reduce conflict for ASPAS resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for = resolved as shift
+  ! shift/reduce conflict for ( resolved as shift
+  ! shift/reduce conflict for ) resolved as shift
+    ASPAS           shift and go to state 25
+    +               shift and go to state 27
+    -               shift and go to state 28
+    *               shift and go to state 29
+    /               shift and go to state 30
+    =               shift and go to state 24
+    (               shift and go to state 31
+    )               shift and go to state 32
+
+  ! ASPAS           [ reduce using rule 12 (simbolo -> .) ]
+  ! +               [ reduce using rule 12 (simbolo -> .) ]
+  ! -               [ reduce using rule 12 (simbolo -> .) ]
+  ! *               [ reduce using rule 12 (simbolo -> .) ]
+  ! /               [ reduce using rule 12 (simbolo -> .) ]
+  ! =               [ reduce using rule 12 (simbolo -> .) ]
+  ! (               [ reduce using rule 12 (simbolo -> .) ]
+  ! )               [ reduce using rule 12 (simbolo -> .) ]
+
+    simbolo                        shift and go to state 26
+
+state 20
+
+    (14) ignore -> PERCENTAGEM IGNORE_T = ASPAS . especiais ASPAS
+    (15) especiais -> . especiais SPECIAL
+    (16) especiais -> .
+
+    ASPAS           reduce using rule 16 (especiais -> .)
+    SPECIAL         reduce using rule 16 (especiais -> .)
+
+    especiais                      shift and go to state 33
+
+state 21
+
+    (17) tokens -> PERCENTAGEM TOKENS_T = . PARRETOA listatokens PARRETOF
+
+    PARRETOA        shift and go to state 34
+
+
+state 22
+
+    (23) regras -> regras regra .
+
+    REGEX           reduce using rule 23 (regras -> regras regra .)
+    $end            reduce using rule 23 (regras -> regras regra .)
+
+
+state 23
+
+    (21) regra -> REGEX . RETURN ( )
+    (22) regra -> REGEX . ERROR ( )
+
+    RETURN          shift and go to state 35
+    ERROR           shift and go to state 36
+
+
+state 24
+
+    (9) simbolo -> = .
+
+    ASPAS           reduce using rule 9 (simbolo -> = .)
+    +               reduce using rule 9 (simbolo -> = .)
+    -               reduce using rule 9 (simbolo -> = .)
+    *               reduce using rule 9 (simbolo -> = .)
+    /               reduce using rule 9 (simbolo -> = .)
+    =               reduce using rule 9 (simbolo -> = .)
+    (               reduce using rule 9 (simbolo -> = .)
+    )               reduce using rule 9 (simbolo -> = .)
+
+
+state 25
+
+    (3) literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS .
+
+    PERCENTAGEM     reduce using rule 3 (literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS .)
+
+
+state 26
+
+    (4) simbolos -> simbolos simbolo .
+
+    ASPAS           reduce using rule 4 (simbolos -> simbolos simbolo .)
+    +               reduce using rule 4 (simbolos -> simbolos simbolo .)
+    -               reduce using rule 4 (simbolos -> simbolos simbolo .)
+    *               reduce using rule 4 (simbolos -> simbolos simbolo .)
+    /               reduce using rule 4 (simbolos -> simbolos simbolo .)
+    =               reduce using rule 4 (simbolos -> simbolos simbolo .)
+    (               reduce using rule 4 (simbolos -> simbolos simbolo .)
+    )               reduce using rule 4 (simbolos -> simbolos simbolo .)
+
+
+state 27
+
+    (5) simbolo -> + .
+
+    ASPAS           reduce using rule 5 (simbolo -> + .)
+    +               reduce using rule 5 (simbolo -> + .)
+    -               reduce using rule 5 (simbolo -> + .)
+    *               reduce using rule 5 (simbolo -> + .)
+    /               reduce using rule 5 (simbolo -> + .)
+    =               reduce using rule 5 (simbolo -> + .)
+    (               reduce using rule 5 (simbolo -> + .)
+    )               reduce using rule 5 (simbolo -> + .)
+
+
+state 28
+
+    (6) simbolo -> - .
+
+    ASPAS           reduce using rule 6 (simbolo -> - .)
+    +               reduce using rule 6 (simbolo -> - .)
+    -               reduce using rule 6 (simbolo -> - .)
+    *               reduce using rule 6 (simbolo -> - .)
+    /               reduce using rule 6 (simbolo -> - .)
+    =               reduce using rule 6 (simbolo -> - .)
+    (               reduce using rule 6 (simbolo -> - .)
+    )               reduce using rule 6 (simbolo -> - .)
+
+
+state 29
+
+    (7) simbolo -> * .
+
+    ASPAS           reduce using rule 7 (simbolo -> * .)
+    +               reduce using rule 7 (simbolo -> * .)
+    -               reduce using rule 7 (simbolo -> * .)
+    *               reduce using rule 7 (simbolo -> * .)
+    /               reduce using rule 7 (simbolo -> * .)
+    =               reduce using rule 7 (simbolo -> * .)
+    (               reduce using rule 7 (simbolo -> * .)
+    )               reduce using rule 7 (simbolo -> * .)
+
+
+state 30
+
+    (8) simbolo -> / .
+
+    ASPAS           reduce using rule 8 (simbolo -> / .)
+    +               reduce using rule 8 (simbolo -> / .)
+    -               reduce using rule 8 (simbolo -> / .)
+    *               reduce using rule 8 (simbolo -> / .)
+    /               reduce using rule 8 (simbolo -> / .)
+    =               reduce using rule 8 (simbolo -> / .)
+    (               reduce using rule 8 (simbolo -> / .)
+    )               reduce using rule 8 (simbolo -> / .)
+
+
+state 31
+
+    (10) simbolo -> ( .
+
+    ASPAS           reduce using rule 10 (simbolo -> ( .)
+    +               reduce using rule 10 (simbolo -> ( .)
+    -               reduce using rule 10 (simbolo -> ( .)
+    *               reduce using rule 10 (simbolo -> ( .)
+    /               reduce using rule 10 (simbolo -> ( .)
+    =               reduce using rule 10 (simbolo -> ( .)
+    (               reduce using rule 10 (simbolo -> ( .)
+    )               reduce using rule 10 (simbolo -> ( .)
+
+
+state 32
+
+    (11) simbolo -> ) .
+
+    ASPAS           reduce using rule 11 (simbolo -> ) .)
+    +               reduce using rule 11 (simbolo -> ) .)
+    -               reduce using rule 11 (simbolo -> ) .)
+    *               reduce using rule 11 (simbolo -> ) .)
+    /               reduce using rule 11 (simbolo -> ) .)
+    =               reduce using rule 11 (simbolo -> ) .)
+    (               reduce using rule 11 (simbolo -> ) .)
+    )               reduce using rule 11 (simbolo -> ) .)
+
+
+state 33
+
+    (14) ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais . ASPAS
+    (15) especiais -> especiais . SPECIAL
+
+    ASPAS           shift and go to state 37
+    SPECIAL         shift and go to state 38
+
+
+state 34
+
+    (17) tokens -> PERCENTAGEM TOKENS_T = PARRETOA . listatokens PARRETOF
+    (19) listatokens -> . PLICA PALM PLICA
+    (20) listatokens -> . listatokens , PLICA PALM PLICA
+
+    PLICA           shift and go to state 40
+
+    listatokens                    shift and go to state 39
+
+state 35
+
+    (21) regra -> REGEX RETURN . ( )
+
+    (               shift and go to state 41
+
+
+state 36
+
+    (22) regra -> REGEX ERROR . ( )
+
+    (               shift and go to state 42
+
+
+state 37
+
+    (14) ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .
+
+    PERCENTAGEM     reduce using rule 14 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
+    REGEX           reduce using rule 14 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
+    $end            reduce using rule 14 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
+
+
+state 38
+
+    (15) especiais -> especiais SPECIAL .
+
+    ASPAS           reduce using rule 15 (especiais -> especiais SPECIAL .)
+    SPECIAL         reduce using rule 15 (especiais -> especiais SPECIAL .)
+
+
+state 39
+
+    (17) tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens . PARRETOF
+    (20) listatokens -> listatokens . , PLICA PALM PLICA
+
+    PARRETOF        shift and go to state 43
+    ,               shift and go to state 44
+
+
+state 40
+
+    (19) listatokens -> PLICA . PALM PLICA
+
+    PALM            shift and go to state 45
+
+
+state 41
+
+    (21) regra -> REGEX RETURN ( . )
+
+    )               shift and go to state 46
+
+
+state 42
+
+    (22) regra -> REGEX ERROR ( . )
+
+    )               shift and go to state 47
+
+
+state 43
+
+    (17) tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .
+
+    REGEX           reduce using rule 17 (tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .)
+    $end            reduce using rule 17 (tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .)
+
+
+state 44
+
+    (20) listatokens -> listatokens , . PLICA PALM PLICA
+
+    PLICA           shift and go to state 48
+
+
+state 45
+
+    (19) listatokens -> PLICA PALM . PLICA
+
+    PLICA           shift and go to state 49
+
+
+state 46
+
+    (21) regra -> REGEX RETURN ( ) .
+
+    REGEX           reduce using rule 21 (regra -> REGEX RETURN ( ) .)
+    $end            reduce using rule 21 (regra -> REGEX RETURN ( ) .)
+
+
+state 47
+
+    (22) regra -> REGEX ERROR ( ) .
+
+    REGEX           reduce using rule 22 (regra -> REGEX ERROR ( ) .)
+    $end            reduce using rule 22 (regra -> REGEX ERROR ( ) .)
+
+
+state 48
+
+    (20) listatokens -> listatokens , PLICA . PALM PLICA
+
+    PALM            shift and go to state 50
+
+
+state 49
+
+    (19) listatokens -> PLICA PALM PLICA .
+
+    PARRETOF        reduce using rule 19 (listatokens -> PLICA PALM PLICA .)
+    ,               reduce using rule 19 (listatokens -> PLICA PALM PLICA .)
+
+
+state 50
+
+    (20) listatokens -> listatokens , PLICA PALM . PLICA
+
+    PLICA           shift and go to state 51
+
+
+state 51
+
+    (20) listatokens -> listatokens , PLICA PALM PLICA .
+
+    PARRETOF        reduce using rule 20 (listatokens -> listatokens , PLICA PALM PLICA .)
+    ,               reduce using rule 20 (listatokens -> listatokens , PLICA PALM PLICA .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ASPAS in state 19 resolved as shift
+WARNING: shift/reduce conflict for + in state 19 resolved as shift
+WARNING: shift/reduce conflict for - in state 19 resolved as shift
+WARNING: shift/reduce conflict for * in state 19 resolved as shift
+WARNING: shift/reduce conflict for / in state 19 resolved as shift
+WARNING: shift/reduce conflict for = in state 19 resolved as shift
+WARNING: shift/reduce conflict for ( in state 19 resolved as shift
+WARNING: shift/reduce conflict for ) in state 19 resolved as shift
