@@ -2,20 +2,19 @@
 %literals = "+-/*=()"
 %ignore = " \t\n"
 %tokens = [ 'VAR','NUMBER' ]
-ç return()
-ç return()
-ç error()
+@[a-zA-Z_][a-zA-Z0-9_]*@ return()
+@\d+(\.\d+)?@ return()
+@.@ error()
 
 %% YACC
 %precedence = [
-('left’,'+','-'),
-(’left’,'*','/'),
-(’right’,’UMINUS’),
+('left','+','-'),
+('left','*','/'),
+('right','UMINUS'),
 ]
-# symboltable : dictionary of variables
 ts = { }
 stat : VAR '=' exp { }
-stat : exp { }
+stat : exp {}
 exp : exp '+' exp { }
 exp : exp '-' exp { }
 exp : exp '*' exp { }
