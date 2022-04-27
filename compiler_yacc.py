@@ -12,7 +12,7 @@ def p_body(p):
 ############################### LEX ####################################################
 def p_lex(p):
     "lex : PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l "
-    p[0] = p[4]
+    p[0] = "import ply.lex as lex\n\n" +  p[6] + p[4] + p[5] + p[7] + "\nlexer = lex.lex()"
 
 def p_literals(p):
     "literals : PERCENTAGEM LITERALS_T '=' ASPAS simbolos ASPAS"
@@ -44,15 +44,19 @@ def p_simbolos_vazio(p):
 
 def p_ignore(p):
     "ignore : PERCENTAGEM IGNORE_T '=' ASPAS especiais ASPAS"
+    p[0] = "\nt_ignore = " + p[4] + " " + p[5] + p[6] + "\n"   #espaço harcoded pq esta a ser ignorado
 
 def p_especiais(p):
     "especiais : especiais SPECIAL"
+    p[0] = p[1] + p[2]
 
 def p_especiais_vazio(p):
     "especiais : "
+    p[0] = ""
 
 def p_tokens(p):
     "tokens : PERCENTAGEM TOKENS_T '=' PARRETOA listatokens PARRETOF"
+    p[0] = f"tokens = {p.parser.tokens}\n"
 
 def p_tokens_vazio(p):
     "tokens : "
@@ -62,24 +66,31 @@ def p_listatokens_simples(p):
     p.parser.tokens.append(p[2])
 
 def p_listatokens_recursivo(p):
-    "listatokens : listatokens ',' PLICA PALMA PLICA  "
+    "listatokens : listatokens ',' PLICA PALMA PLICA"
     p.parser.tokens.append(p[4])
 
 
 def p_regras_l(p):
     "regras_l : regras_l regra_l"
+    p[0] = p[1] + "\n" + p[2]
 
 def p_regras_l_vazio(p):
     "regras_l : "
+    p[0] = ""
 
 def p_regra_l_return(p):
-    "regra_l : REGEX RETURN '(' ')'"
-    #aux = "def t_"+p[4]+"(t):"
-    #aux += "\tr'"+p[1]+"'"
-    #aux += "\treturn "+p[6]+"\n"
+    "regra_l : REGEX RETURN '(' PLICA PALMA PLICA TVALUE  "
+    aux = "def t_"+p[5]+"(t):\n"
+    aux += "\tr'"+p[1][1:len(p[1])-1]+"'\n"
+    aux += "\treturn "+p[7][1:len(p[7])-1]+"\n\n"
+    p[0] = aux
 
 def p_regra_error(p):
-    "regra_l : REGEX ERROR '(' ')'"
+    "regra_l : REGEX ERROR '(' PALMI QUOTES ',' TLSKIP ')'"
+    aux = "def t_error(t):\n"
+    aux += "\tprint("+p[4] + p[5]+")\n"
+    aux += f"\t{p[7]}\n\n"
+    p[0] = aux
 
 
 ######################### YACC ############################################
@@ -117,7 +128,7 @@ def p_symboltable(p):
 
 ########### REVER
 def p_regras_stat(p):
-    "regra_y : PALMI ':' PALMA PLICA '=' PLICA PALMI CHAV_A CHAV_F"  
+    "regra_y : PALMI ':' PALMA PLICA '=' PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF '=' TVAR CHAV_F"  
 
 def p_regras_stat_e(p):
     "regra_y : PALMI ':' PALMI CHAV_A CHAV_F"
@@ -163,5 +174,4 @@ with open('teste4.txt',"r") as f:
     data = f.read()
     #print(data)
     result = parser.parse(data)
-    print(parser.tokens)
     print(result)

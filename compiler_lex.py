@@ -1,12 +1,9 @@
 import ply.lex as lex
-import sys
-
-from sqlalchemy import literal
 
 
 tokens = ['LEX_T', 'YACC_T', 'LEFT', 'RIGHT', 'TS', 
-            'CHAV_A', 'NEG', 'UMINUS', 'CHAV_F', 
-            'PERCENTAGEM', 'PARRETOA', 'PARRETOF', 'ASPAS', 
+            'CHAV_A', 'NEG', 'UMINUS', 'CHAV_F', 'TVALUE', 'QUOTES', 
+            'TVAR', 'TLSKIP', 'PERCENTAGEM', 'PARRETOA', 'PARRETOF', 'ASPAS', 
             'PRECEDENCE_T','PLICA', 'LITERALS_T', 'IGNORE_T', 'TOKENS_T', 
             'PALMA', 'PALMI', 'SPECIAL', 'REGEX', 'RETURN', 'ERROR'] 
 
@@ -24,6 +21,11 @@ def t_YACC_T(t):
     t.value = str(t.value)
     return t
 
+def t_TVALUE(t):
+    r',.*?t\.value.*?\)*' #!!! espaço antes do t.value para nao entrar em conflito com o return do error
+    t.value = str(t.value)
+    return t
+
 def t_CHAV_A(t):  #\t \n ou espaço
     r'{'
     t.value = str(t.value)
@@ -36,6 +38,11 @@ def t_CHAV_F(t):  #\t \n ou espaço
 
 def t_PRECEDENCE_T(t):
     r'precedence\ *'
+    t.value = str(t.value)
+    return t
+
+def t_QUOTES(t):
+    r'"\w.+"'
     t.value = str(t.value)
     return t
 
@@ -75,7 +82,6 @@ def t_UMINUS(t):
     return t
 
 
-
 #def t_IGUAL(t):
 #    r'='
 #    t.value = str(t.value)
@@ -109,13 +115,23 @@ def t_PERCENTAGEM(t):
 def t_TS(t):  #\t \n ou espaço
     r'ts'
     t.value = str(t.value)
+    return t 
+
+def t_TVAR(t):  #\t \n ou espaço
+    r't\[\d\]'
+    t.value = str(t.value)
+    return t 
+
+def t_TLSKIP(t):
+    r't\.lexer\.skip\(1\)'
+    t.value = str(t.value)
     return t
+
 
 def t_RETURN(t):
     r'return'
     t.value = str(t.value)
     return t
-
 
 def t_ERROR(t): #erro da gramatica
     r'error'
