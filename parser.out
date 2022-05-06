@@ -1,9 +1,18 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    CHAV_A
+    CHAV_F
+    GETVAL
+    NEG
+    PRINT
+    TVAR
+
 Grammar
 
 Rule 0     S' -> body
-Rule 1     body -> lex yacc
+Rule 1     body -> lex yacc funcoes
 Rule 2     lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l
 Rule 3     literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS
 Rule 4     simbolos -> simbolos simbolo
@@ -14,101 +23,113 @@ Rule 8     simbolo -> /
 Rule 9     simbolo -> =
 Rule 10    simbolo -> (
 Rule 11    simbolo -> )
-Rule 12    simbolo -> <empty>
-Rule 13    simbolos -> <empty>
-Rule 14    ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS
-Rule 15    especiais -> especiais SPECIAL
-Rule 16    especiais -> <empty>
-Rule 17    tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF
-Rule 18    tokens -> <empty>
-Rule 19    listatokens -> PLICA PALMA PLICA
-Rule 20    listatokens -> listatokens , PLICA PALMA PLICA
-Rule 21    regras_l -> regras_l regra_l
-Rule 22    regras_l -> <empty>
-Rule 23    regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE
-Rule 24    regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP )
-Rule 25    regras_y -> regras_y regra_y
-Rule 26    regras_y -> <empty>
-Rule 27    yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y
-Rule 28    precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF
-Rule 29    conteudo_prec -> tuplo , tuplo , tuplo_2 ,
-Rule 30    tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
-Rule 31    tuplo_2 -> ( lado , PLICA UMINUS PLICA )
-Rule 32    lado -> PLICA LEFT PLICA
-Rule 33    lado -> PLICA RIGHT PLICA
-Rule 34    symboltable -> TS = CHAV_A CHAV_F
-Rule 35    regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-Rule 36    regra_y -> PALMI : PALMI CHAV_A CHAV_F
-Rule 37    regra_y -> PALMI : PALMI PLICA + PLICA PALMI CHAV_A CHAV_F
-Rule 38    regra_y -> PALMI : PALMI PLICA - PLICA PALMI CHAV_A CHAV_F
-Rule 39    regra_y -> PALMI : PALMI PLICA * PLICA PALMI CHAV_A CHAV_F
-Rule 40    regra_y -> PALMI : PALMI PLICA / PLICA PALMI CHAV_A CHAV_F
-Rule 41    regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-Rule 42    regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F
-Rule 43    regra_y -> PALMI : PALMA CHAV_A CHAV_F
+Rule 12    simbolos -> <empty>
+Rule 13    ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS
+Rule 14    especiais -> especiais SPECIAL
+Rule 15    especiais -> <empty>
+Rule 16    tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF
+Rule 17    tokens -> <empty>
+Rule 18    listatokens -> PLICA PALMA PLICA
+Rule 19    listatokens -> listatokens , PLICA PALMA PLICA
+Rule 20    regras_l -> regras_l regra_l
+Rule 21    regras_l -> <empty>
+Rule 22    regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE
+Rule 23    regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP )
+Rule 24    yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y
+Rule 25    palavra -> PALMI
+Rule 26    palavra -> PALMA
+Rule 27    regras_y -> regras_y regra_y
+Rule 28    regras_y -> <empty>
+Rule 29    precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF
+Rule 30    conteudo_prec -> conteudo_prec tuplo
+Rule 31    conteudo_prec -> <empty>
+Rule 32    tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
+Rule 33    tuplo -> ( lado , PLICA UMINUS PLICA )
+Rule 34    lado -> PLICA LEFT PLICA
+Rule 35    lado -> PLICA RIGHT PLICA
+Rule 36    symboltable -> TS = CHAVS
+Rule 37    regra_y -> PALMI : termo CHAVS
+Rule 38    simbolo_operacao -> +
+Rule 39    simbolo_operacao -> -
+Rule 40    simbolo_operacao -> *
+Rule 41    simbolo_operacao -> /
+Rule 42    simbolo_operacao -> =
+Rule 43    termo -> fator
+Rule 44    termo -> termo PLICA simbolo_operacao PLICA fator
+Rule 45    fator -> palavra
+Rule 46    fator -> PLICA ( PLICA termo PLICA ) PLICA
+Rule 47    funcoes -> FIM
 
 Terminals, with rules where they appear
 
-(                    : 10 23 24 30 31 42
-)                    : 11 24 30 31 42
-*                    : 7 39
-+                    : 5 37
-,                    : 20 24 29 29 29 30 30 31
--                    : 6 38 41
-/                    : 8 40
-:                    : 35 36 37 38 39 40 41 42 43
-=                    : 3 9 14 17 28 34 35 35
-ASPAS                : 3 3 14 14
-CHAV_A               : 34 35 36 37 38 39 40 41 42 43
-CHAV_F               : 34 35 36 37 38 39 40 41 42 43
-ERROR                : 24
-IGNORE_T             : 14
-LEFT                 : 32
+(                    : 10 22 23 32 33 46
+)                    : 11 23 32 33 46
+*                    : 7 40
++                    : 5 38
+,                    : 19 23 32 32 33
+-                    : 6 39
+/                    : 8 41
+:                    : 37
+=                    : 3 9 13 16 29 36 42
+ASPAS                : 3 3 13 13
+CHAVS                : 36 37
+CHAV_A               : 
+CHAV_F               : 
+ERROR                : 23
+FIM                  : 47
+GETVAL               : 
+IGNORE_T             : 13
+LEFT                 : 34
 LEX_T                : 2
 LITERALS_T           : 3
-NEG                  : 41
-PALMA                : 19 20 23 35 43
-PALMI                : 24 35 35 36 36 37 37 37 38 38 38 39 39 39 40 40 40 41 41 42 42 43
-PARRETOA             : 17 28 35
-PARRETOF             : 17 28 35
-PERCENTAGEM          : 2 2 3 14 17 27 27 28 41
-PLICA                : 19 19 20 20 23 23 30 30 30 30 31 31 32 32 33 33 35 35 37 37 38 38 39 39 40 40 41 41 42 42 42 42
-PRECEDENCE_T         : 28
-QUOTES               : 24
-REGEX                : 23 24
-RETURN               : 23
-RIGHT                : 33
-SPECIAL              : 15
-TLSKIP               : 24
-TOKENS_T             : 17
-TS                   : 34 35
-TVALUE               : 23
-TVAR                 : 35 35
-UMINUS               : 31 41
-YACC_T               : 27
+NEG                  : 
+PALMA                : 18 19 22 26
+PALMI                : 23 25 37
+PARRETOA             : 16 29
+PARRETOF             : 16 29
+PERCENTAGEM          : 2 2 3 13 16 24 24 29
+PLICA                : 18 18 19 19 22 22 32 32 32 32 33 33 34 34 35 35 44 44 46 46 46 46
+PRECEDENCE_T         : 29
+PRINT                : 
+QUOTES               : 23
+REGEX                : 22 23
+RETURN               : 22
+RIGHT                : 35
+SPECIAL              : 14
+TLSKIP               : 23
+TOKENS_T             : 16
+TS                   : 36
+TVALUE               : 22
+TVAR                 : 
+UMINUS               : 33
+YACC_T               : 24
 error                : 
 
 Nonterminals, with rules where they appear
 
 body                 : 0
-conteudo_prec        : 28
-especiais            : 14 15
+conteudo_prec        : 29 30
+especiais            : 13 14
+fator                : 43 44
+funcoes              : 1
 ignore               : 2
-lado                 : 30 31
+lado                 : 32 33
 lex                  : 1
-listatokens          : 17 20
+listatokens          : 16 19
 literals             : 2
-precedence           : 27
-regra_l              : 21
-regra_y              : 25
-regras_l             : 2 21
-regras_y             : 25 27
-simbolo              : 4 30 30
+palavra              : 45
+precedence           : 24
+regra_l              : 20
+regra_y              : 27
+regras_l             : 2 20
+regras_y             : 24 27
+simbolo              : 4 32 32
+simbolo_operacao     : 44
 simbolos             : 3 4
-symboltable          : 27
+symboltable          : 24
+termo                : 37 44 46
 tokens               : 2
-tuplo                : 29 29
-tuplo_2              : 29
+tuplo                : 30
 yacc                 : 1
 
 Parsing method: LALR
@@ -116,7 +137,7 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . body
-    (1) body -> . lex yacc
+    (1) body -> . lex yacc funcoes
     (2) lex -> . PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l
 
     PERCENTAGEM     shift and go to state 3
@@ -132,8 +153,8 @@ state 1
 
 state 2
 
-    (1) body -> lex . yacc
-    (27) yacc -> . PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y
+    (1) body -> lex . yacc funcoes
+    (24) yacc -> . PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y
 
     PERCENTAGEM     shift and go to state 5
 
@@ -148,285 +169,286 @@ state 3
 
 state 4
 
-    (1) body -> lex yacc .
+    (1) body -> lex yacc . funcoes
+    (47) funcoes -> . FIM
 
-    $end            reduce using rule 1 (body -> lex yacc .)
+    FIM             shift and go to state 8
 
+    funcoes                        shift and go to state 7
 
 state 5
 
-    (27) yacc -> PERCENTAGEM . PERCENTAGEM YACC_T precedence symboltable regras_y
+    (24) yacc -> PERCENTAGEM . PERCENTAGEM YACC_T precedence symboltable regras_y
 
-    PERCENTAGEM     shift and go to state 7
+    PERCENTAGEM     shift and go to state 9
 
 
 state 6
 
     (2) lex -> PERCENTAGEM PERCENTAGEM . LEX_T literals ignore tokens regras_l
 
-    LEX_T           shift and go to state 8
+    LEX_T           shift and go to state 10
 
 
 state 7
 
-    (27) yacc -> PERCENTAGEM PERCENTAGEM . YACC_T precedence symboltable regras_y
+    (1) body -> lex yacc funcoes .
 
-    YACC_T          shift and go to state 9
+    $end            reduce using rule 1 (body -> lex yacc funcoes .)
 
 
 state 8
 
-    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T . literals ignore tokens regras_l
-    (3) literals -> . PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS
+    (47) funcoes -> FIM .
 
-    PERCENTAGEM     shift and go to state 10
+    $end            reduce using rule 47 (funcoes -> FIM .)
 
-    literals                       shift and go to state 11
 
 state 9
 
-    (27) yacc -> PERCENTAGEM PERCENTAGEM YACC_T . precedence symboltable regras_y
-    (28) precedence -> . PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF
+    (24) yacc -> PERCENTAGEM PERCENTAGEM . YACC_T precedence symboltable regras_y
 
-    PERCENTAGEM     shift and go to state 12
+    YACC_T          shift and go to state 11
 
-    precedence                     shift and go to state 13
 
 state 10
 
-    (3) literals -> PERCENTAGEM . LITERALS_T = ASPAS simbolos ASPAS
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T . literals ignore tokens regras_l
+    (3) literals -> . PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS
 
-    LITERALS_T      shift and go to state 14
+    PERCENTAGEM     shift and go to state 12
 
+    literals                       shift and go to state 13
 
 state 11
 
-    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals . ignore tokens regras_l
-    (14) ignore -> . PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS
+    (24) yacc -> PERCENTAGEM PERCENTAGEM YACC_T . precedence symboltable regras_y
+    (29) precedence -> . PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF
 
-    PERCENTAGEM     shift and go to state 15
+    PERCENTAGEM     shift and go to state 14
 
-    ignore                         shift and go to state 16
+    precedence                     shift and go to state 15
 
 state 12
 
-    (28) precedence -> PERCENTAGEM . PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF
+    (3) literals -> PERCENTAGEM . LITERALS_T = ASPAS simbolos ASPAS
 
-    PRECEDENCE_T    shift and go to state 17
+    LITERALS_T      shift and go to state 16
 
 
 state 13
 
-    (27) yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence . symboltable regras_y
-    (34) symboltable -> . TS = CHAV_A CHAV_F
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals . ignore tokens regras_l
+    (13) ignore -> . PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS
 
-    TS              shift and go to state 19
+    PERCENTAGEM     shift and go to state 17
 
-    symboltable                    shift and go to state 18
+    ignore                         shift and go to state 18
 
 state 14
 
-    (3) literals -> PERCENTAGEM LITERALS_T . = ASPAS simbolos ASPAS
+    (29) precedence -> PERCENTAGEM . PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF
 
-    =               shift and go to state 20
+    PRECEDENCE_T    shift and go to state 19
 
 
 state 15
 
-    (14) ignore -> PERCENTAGEM . IGNORE_T = ASPAS especiais ASPAS
+    (24) yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence . symboltable regras_y
+    (36) symboltable -> . TS = CHAVS
 
-    IGNORE_T        shift and go to state 21
+    TS              shift and go to state 21
 
+    symboltable                    shift and go to state 20
 
 state 16
 
-    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore . tokens regras_l
-    (17) tokens -> . PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF
-    (18) tokens -> .
+    (3) literals -> PERCENTAGEM LITERALS_T . = ASPAS simbolos ASPAS
 
-  ! shift/reduce conflict for PERCENTAGEM resolved as shift
-    PERCENTAGEM     shift and go to state 22
-    REGEX           reduce using rule 18 (tokens -> .)
+    =               shift and go to state 22
 
-  ! PERCENTAGEM     [ reduce using rule 18 (tokens -> .) ]
-
-    tokens                         shift and go to state 23
 
 state 17
 
-    (28) precedence -> PERCENTAGEM PRECEDENCE_T . = PARRETOA conteudo_prec PARRETOF
+    (13) ignore -> PERCENTAGEM . IGNORE_T = ASPAS especiais ASPAS
 
-    =               shift and go to state 24
+    IGNORE_T        shift and go to state 23
 
 
 state 18
 
-    (27) yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable . regras_y
-    (25) regras_y -> . regras_y regra_y
-    (26) regras_y -> .
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore . tokens regras_l
+    (16) tokens -> . PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF
+    (17) tokens -> .
 
-    PALMI           reduce using rule 26 (regras_y -> .)
-    $end            reduce using rule 26 (regras_y -> .)
+  ! shift/reduce conflict for PERCENTAGEM resolved as shift
+    PERCENTAGEM     shift and go to state 24
+    REGEX           reduce using rule 17 (tokens -> .)
 
-    regras_y                       shift and go to state 25
+  ! PERCENTAGEM     [ reduce using rule 17 (tokens -> .) ]
+
+    tokens                         shift and go to state 25
 
 state 19
 
-    (34) symboltable -> TS . = CHAV_A CHAV_F
+    (29) precedence -> PERCENTAGEM PRECEDENCE_T . = PARRETOA conteudo_prec PARRETOF
 
     =               shift and go to state 26
 
 
 state 20
 
-    (3) literals -> PERCENTAGEM LITERALS_T = . ASPAS simbolos ASPAS
+    (24) yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable . regras_y
+    (27) regras_y -> . regras_y regra_y
+    (28) regras_y -> .
 
-    ASPAS           shift and go to state 27
+    PALMI           reduce using rule 28 (regras_y -> .)
+    FIM             reduce using rule 28 (regras_y -> .)
 
+    regras_y                       shift and go to state 27
 
 state 21
 
-    (14) ignore -> PERCENTAGEM IGNORE_T . = ASPAS especiais ASPAS
+    (36) symboltable -> TS . = CHAVS
 
     =               shift and go to state 28
 
 
 state 22
 
-    (17) tokens -> PERCENTAGEM . TOKENS_T = PARRETOA listatokens PARRETOF
+    (3) literals -> PERCENTAGEM LITERALS_T = . ASPAS simbolos ASPAS
 
-    TOKENS_T        shift and go to state 29
+    ASPAS           shift and go to state 29
 
 
 state 23
 
-    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens . regras_l
-    (21) regras_l -> . regras_l regra_l
-    (22) regras_l -> .
+    (13) ignore -> PERCENTAGEM IGNORE_T . = ASPAS especiais ASPAS
 
-    REGEX           reduce using rule 22 (regras_l -> .)
-    PERCENTAGEM     reduce using rule 22 (regras_l -> .)
+    =               shift and go to state 30
 
-    regras_l                       shift and go to state 30
 
 state 24
 
-    (28) precedence -> PERCENTAGEM PRECEDENCE_T = . PARRETOA conteudo_prec PARRETOF
+    (16) tokens -> PERCENTAGEM . TOKENS_T = PARRETOA listatokens PARRETOF
 
-    PARRETOA        shift and go to state 31
+    TOKENS_T        shift and go to state 31
 
 
 state 25
 
-    (27) yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y .
-    (25) regras_y -> regras_y . regra_y
-    (35) regra_y -> . PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-    (36) regra_y -> . PALMI : PALMI CHAV_A CHAV_F
-    (37) regra_y -> . PALMI : PALMI PLICA + PLICA PALMI CHAV_A CHAV_F
-    (38) regra_y -> . PALMI : PALMI PLICA - PLICA PALMI CHAV_A CHAV_F
-    (39) regra_y -> . PALMI : PALMI PLICA * PLICA PALMI CHAV_A CHAV_F
-    (40) regra_y -> . PALMI : PALMI PLICA / PLICA PALMI CHAV_A CHAV_F
-    (41) regra_y -> . PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-    (42) regra_y -> . PALMI : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F
-    (43) regra_y -> . PALMI : PALMA CHAV_A CHAV_F
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens . regras_l
+    (20) regras_l -> . regras_l regra_l
+    (21) regras_l -> .
 
-    $end            reduce using rule 27 (yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y .)
-    PALMI           shift and go to state 33
+    REGEX           reduce using rule 21 (regras_l -> .)
+    PERCENTAGEM     reduce using rule 21 (regras_l -> .)
 
-    regra_y                        shift and go to state 32
+    regras_l                       shift and go to state 32
 
 state 26
 
-    (34) symboltable -> TS = . CHAV_A CHAV_F
+    (29) precedence -> PERCENTAGEM PRECEDENCE_T = . PARRETOA conteudo_prec PARRETOF
 
-    CHAV_A          shift and go to state 34
+    PARRETOA        shift and go to state 33
 
 
 state 27
 
-    (3) literals -> PERCENTAGEM LITERALS_T = ASPAS . simbolos ASPAS
-    (4) simbolos -> . simbolos simbolo
-    (13) simbolos -> .
+    (24) yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y .
+    (27) regras_y -> regras_y . regra_y
+    (37) regra_y -> . PALMI : termo CHAVS
 
-    ASPAS           reduce using rule 13 (simbolos -> .)
-    +               reduce using rule 13 (simbolos -> .)
-    -               reduce using rule 13 (simbolos -> .)
-    *               reduce using rule 13 (simbolos -> .)
-    /               reduce using rule 13 (simbolos -> .)
-    =               reduce using rule 13 (simbolos -> .)
-    (               reduce using rule 13 (simbolos -> .)
-    )               reduce using rule 13 (simbolos -> .)
+    FIM             reduce using rule 24 (yacc -> PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y .)
+    PALMI           shift and go to state 35
 
-    simbolos                       shift and go to state 35
+    regra_y                        shift and go to state 34
 
 state 28
 
-    (14) ignore -> PERCENTAGEM IGNORE_T = . ASPAS especiais ASPAS
+    (36) symboltable -> TS = . CHAVS
 
-    ASPAS           shift and go to state 36
+    CHAVS           shift and go to state 36
 
 
 state 29
 
-    (17) tokens -> PERCENTAGEM TOKENS_T . = PARRETOA listatokens PARRETOF
+    (3) literals -> PERCENTAGEM LITERALS_T = ASPAS . simbolos ASPAS
+    (4) simbolos -> . simbolos simbolo
+    (12) simbolos -> .
 
-    =               shift and go to state 37
+    ASPAS           reduce using rule 12 (simbolos -> .)
+    +               reduce using rule 12 (simbolos -> .)
+    -               reduce using rule 12 (simbolos -> .)
+    *               reduce using rule 12 (simbolos -> .)
+    /               reduce using rule 12 (simbolos -> .)
+    =               reduce using rule 12 (simbolos -> .)
+    (               reduce using rule 12 (simbolos -> .)
+    )               reduce using rule 12 (simbolos -> .)
 
+    simbolos                       shift and go to state 37
 
 state 30
 
-    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l .
-    (21) regras_l -> regras_l . regra_l
-    (23) regra_l -> . REGEX RETURN ( PLICA PALMA PLICA TVALUE
-    (24) regra_l -> . REGEX ERROR ( PALMI QUOTES , TLSKIP )
+    (13) ignore -> PERCENTAGEM IGNORE_T = . ASPAS especiais ASPAS
 
-    PERCENTAGEM     reduce using rule 2 (lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l .)
-    REGEX           shift and go to state 39
+    ASPAS           shift and go to state 38
 
-    regra_l                        shift and go to state 38
 
 state 31
 
-    (28) precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA . conteudo_prec PARRETOF
-    (29) conteudo_prec -> . tuplo , tuplo , tuplo_2 ,
-    (30) tuplo -> . ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (16) tokens -> PERCENTAGEM TOKENS_T . = PARRETOA listatokens PARRETOF
 
-    (               shift and go to state 42
+    =               shift and go to state 39
 
-    conteudo_prec                  shift and go to state 40
-    tuplo                          shift and go to state 41
 
 state 32
 
-    (25) regras_y -> regras_y regra_y .
+    (2) lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l .
+    (20) regras_l -> regras_l . regra_l
+    (22) regra_l -> . REGEX RETURN ( PLICA PALMA PLICA TVALUE
+    (23) regra_l -> . REGEX ERROR ( PALMI QUOTES , TLSKIP )
 
-    PALMI           reduce using rule 25 (regras_y -> regras_y regra_y .)
-    $end            reduce using rule 25 (regras_y -> regras_y regra_y .)
+    PERCENTAGEM     reduce using rule 2 (lex -> PERCENTAGEM PERCENTAGEM LEX_T literals ignore tokens regras_l .)
+    REGEX           shift and go to state 41
 
+    regra_l                        shift and go to state 40
 
 state 33
 
-    (35) regra_y -> PALMI . : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-    (36) regra_y -> PALMI . : PALMI CHAV_A CHAV_F
-    (37) regra_y -> PALMI . : PALMI PLICA + PLICA PALMI CHAV_A CHAV_F
-    (38) regra_y -> PALMI . : PALMI PLICA - PLICA PALMI CHAV_A CHAV_F
-    (39) regra_y -> PALMI . : PALMI PLICA * PLICA PALMI CHAV_A CHAV_F
-    (40) regra_y -> PALMI . : PALMI PLICA / PLICA PALMI CHAV_A CHAV_F
-    (41) regra_y -> PALMI . : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-    (42) regra_y -> PALMI . : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F
-    (43) regra_y -> PALMI . : PALMA CHAV_A CHAV_F
+    (29) precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA . conteudo_prec PARRETOF
+    (30) conteudo_prec -> . conteudo_prec tuplo
+    (31) conteudo_prec -> .
+
+    PARRETOF        reduce using rule 31 (conteudo_prec -> .)
+    (               reduce using rule 31 (conteudo_prec -> .)
+
+    conteudo_prec                  shift and go to state 42
+
+state 34
+
+    (27) regras_y -> regras_y regra_y .
+
+    PALMI           reduce using rule 27 (regras_y -> regras_y regra_y .)
+    FIM             reduce using rule 27 (regras_y -> regras_y regra_y .)
+
+
+state 35
+
+    (37) regra_y -> PALMI . : termo CHAVS
 
     :               shift and go to state 43
 
 
-state 34
+state 36
 
-    (34) symboltable -> TS = CHAV_A . CHAV_F
+    (36) symboltable -> TS = CHAVS .
 
-    CHAV_F          shift and go to state 44
+    PALMI           reduce using rule 36 (symboltable -> TS = CHAVS .)
+    FIM             reduce using rule 36 (symboltable -> TS = CHAVS .)
 
 
-state 35
+state 37
 
     (3) literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos . ASPAS
     (4) simbolos -> simbolos . simbolo
@@ -437,121 +459,84 @@ state 35
     (9) simbolo -> . =
     (10) simbolo -> . (
     (11) simbolo -> . )
-    (12) simbolo -> .
 
-  ! shift/reduce conflict for ASPAS resolved as shift
-  ! shift/reduce conflict for + resolved as shift
-  ! shift/reduce conflict for - resolved as shift
-  ! shift/reduce conflict for * resolved as shift
-  ! shift/reduce conflict for / resolved as shift
-  ! shift/reduce conflict for = resolved as shift
-  ! shift/reduce conflict for ( resolved as shift
-  ! shift/reduce conflict for ) resolved as shift
-    ASPAS           shift and go to state 46
-    +               shift and go to state 48
-    -               shift and go to state 49
-    *               shift and go to state 50
-    /               shift and go to state 51
-    =               shift and go to state 45
-    (               shift and go to state 52
-    )               shift and go to state 53
+    ASPAS           shift and go to state 45
+    +               shift and go to state 47
+    -               shift and go to state 48
+    *               shift and go to state 49
+    /               shift and go to state 50
+    =               shift and go to state 44
+    (               shift and go to state 51
+    )               shift and go to state 52
 
-  ! ASPAS           [ reduce using rule 12 (simbolo -> .) ]
-  ! +               [ reduce using rule 12 (simbolo -> .) ]
-  ! -               [ reduce using rule 12 (simbolo -> .) ]
-  ! *               [ reduce using rule 12 (simbolo -> .) ]
-  ! /               [ reduce using rule 12 (simbolo -> .) ]
-  ! =               [ reduce using rule 12 (simbolo -> .) ]
-  ! (               [ reduce using rule 12 (simbolo -> .) ]
-  ! )               [ reduce using rule 12 (simbolo -> .) ]
-
-    simbolo                        shift and go to state 47
-
-state 36
-
-    (14) ignore -> PERCENTAGEM IGNORE_T = ASPAS . especiais ASPAS
-    (15) especiais -> . especiais SPECIAL
-    (16) especiais -> .
-
-    ASPAS           reduce using rule 16 (especiais -> .)
-    SPECIAL         reduce using rule 16 (especiais -> .)
-
-    especiais                      shift and go to state 54
-
-state 37
-
-    (17) tokens -> PERCENTAGEM TOKENS_T = . PARRETOA listatokens PARRETOF
-
-    PARRETOA        shift and go to state 55
-
+    simbolo                        shift and go to state 46
 
 state 38
 
-    (21) regras_l -> regras_l regra_l .
+    (13) ignore -> PERCENTAGEM IGNORE_T = ASPAS . especiais ASPAS
+    (14) especiais -> . especiais SPECIAL
+    (15) especiais -> .
 
-    REGEX           reduce using rule 21 (regras_l -> regras_l regra_l .)
-    PERCENTAGEM     reduce using rule 21 (regras_l -> regras_l regra_l .)
+    ASPAS           reduce using rule 15 (especiais -> .)
+    SPECIAL         reduce using rule 15 (especiais -> .)
 
+    especiais                      shift and go to state 53
 
 state 39
 
-    (23) regra_l -> REGEX . RETURN ( PLICA PALMA PLICA TVALUE
-    (24) regra_l -> REGEX . ERROR ( PALMI QUOTES , TLSKIP )
+    (16) tokens -> PERCENTAGEM TOKENS_T = . PARRETOA listatokens PARRETOF
 
-    RETURN          shift and go to state 56
-    ERROR           shift and go to state 57
+    PARRETOA        shift and go to state 54
 
 
 state 40
 
-    (28) precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec . PARRETOF
+    (20) regras_l -> regras_l regra_l .
 
-    PARRETOF        shift and go to state 58
+    REGEX           reduce using rule 20 (regras_l -> regras_l regra_l .)
+    PERCENTAGEM     reduce using rule 20 (regras_l -> regras_l regra_l .)
 
 
 state 41
 
-    (29) conteudo_prec -> tuplo . , tuplo , tuplo_2 ,
+    (22) regra_l -> REGEX . RETURN ( PLICA PALMA PLICA TVALUE
+    (23) regra_l -> REGEX . ERROR ( PALMI QUOTES , TLSKIP )
 
-    ,               shift and go to state 59
+    RETURN          shift and go to state 55
+    ERROR           shift and go to state 56
 
 
 state 42
 
-    (30) tuplo -> ( . lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
-    (32) lado -> . PLICA LEFT PLICA
-    (33) lado -> . PLICA RIGHT PLICA
+    (29) precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec . PARRETOF
+    (30) conteudo_prec -> conteudo_prec . tuplo
+    (32) tuplo -> . ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (33) tuplo -> . ( lado , PLICA UMINUS PLICA )
 
-    PLICA           shift and go to state 61
+    PARRETOF        shift and go to state 57
+    (               shift and go to state 59
 
-    lado                           shift and go to state 60
+    tuplo                          shift and go to state 58
 
 state 43
 
-    (35) regra_y -> PALMI : . PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-    (36) regra_y -> PALMI : . PALMI CHAV_A CHAV_F
-    (37) regra_y -> PALMI : . PALMI PLICA + PLICA PALMI CHAV_A CHAV_F
-    (38) regra_y -> PALMI : . PALMI PLICA - PLICA PALMI CHAV_A CHAV_F
-    (39) regra_y -> PALMI : . PALMI PLICA * PLICA PALMI CHAV_A CHAV_F
-    (40) regra_y -> PALMI : . PALMI PLICA / PLICA PALMI CHAV_A CHAV_F
-    (41) regra_y -> PALMI : . PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-    (42) regra_y -> PALMI : . PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F
-    (43) regra_y -> PALMI : . PALMA CHAV_A CHAV_F
+    (37) regra_y -> PALMI : . termo CHAVS
+    (43) termo -> . fator
+    (44) termo -> . termo PLICA simbolo_operacao PLICA fator
+    (45) fator -> . palavra
+    (46) fator -> . PLICA ( PLICA termo PLICA ) PLICA
+    (25) palavra -> . PALMI
+    (26) palavra -> . PALMA
 
-    PALMA           shift and go to state 63
-    PALMI           shift and go to state 62
-    PLICA           shift and go to state 64
+    PLICA           shift and go to state 63
+    PALMI           shift and go to state 60
+    PALMA           shift and go to state 65
 
+    termo                          shift and go to state 61
+    fator                          shift and go to state 62
+    palavra                        shift and go to state 64
 
 state 44
-
-    (34) symboltable -> TS = CHAV_A CHAV_F .
-
-    PALMI           reduce using rule 34 (symboltable -> TS = CHAV_A CHAV_F .)
-    $end            reduce using rule 34 (symboltable -> TS = CHAV_A CHAV_F .)
-
-
-state 45
 
     (9) simbolo -> = .
 
@@ -566,14 +551,14 @@ state 45
     PLICA           reduce using rule 9 (simbolo -> = .)
 
 
-state 46
+state 45
 
     (3) literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS .
 
     PERCENTAGEM     reduce using rule 3 (literals -> PERCENTAGEM LITERALS_T = ASPAS simbolos ASPAS .)
 
 
-state 47
+state 46
 
     (4) simbolos -> simbolos simbolo .
 
@@ -587,7 +572,7 @@ state 47
     )               reduce using rule 4 (simbolos -> simbolos simbolo .)
 
 
-state 48
+state 47
 
     (5) simbolo -> + .
 
@@ -602,7 +587,7 @@ state 48
     PLICA           reduce using rule 5 (simbolo -> + .)
 
 
-state 49
+state 48
 
     (6) simbolo -> - .
 
@@ -617,7 +602,7 @@ state 49
     PLICA           reduce using rule 6 (simbolo -> - .)
 
 
-state 50
+state 49
 
     (7) simbolo -> * .
 
@@ -632,7 +617,7 @@ state 50
     PLICA           reduce using rule 7 (simbolo -> * .)
 
 
-state 51
+state 50
 
     (8) simbolo -> / .
 
@@ -647,7 +632,7 @@ state 51
     PLICA           reduce using rule 8 (simbolo -> / .)
 
 
-state 52
+state 51
 
     (10) simbolo -> ( .
 
@@ -662,7 +647,7 @@ state 52
     PLICA           reduce using rule 10 (simbolo -> ( .)
 
 
-state 53
+state 52
 
     (11) simbolo -> ) .
 
@@ -677,667 +662,359 @@ state 53
     PLICA           reduce using rule 11 (simbolo -> ) .)
 
 
+state 53
+
+    (13) ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais . ASPAS
+    (14) especiais -> especiais . SPECIAL
+
+    ASPAS           shift and go to state 66
+    SPECIAL         shift and go to state 67
+
+
 state 54
 
-    (14) ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais . ASPAS
-    (15) especiais -> especiais . SPECIAL
+    (16) tokens -> PERCENTAGEM TOKENS_T = PARRETOA . listatokens PARRETOF
+    (18) listatokens -> . PLICA PALMA PLICA
+    (19) listatokens -> . listatokens , PLICA PALMA PLICA
 
-    ASPAS           shift and go to state 65
-    SPECIAL         shift and go to state 66
+    PLICA           shift and go to state 69
 
+    listatokens                    shift and go to state 68
 
 state 55
 
-    (17) tokens -> PERCENTAGEM TOKENS_T = PARRETOA . listatokens PARRETOF
-    (19) listatokens -> . PLICA PALMA PLICA
-    (20) listatokens -> . listatokens , PLICA PALMA PLICA
-
-    PLICA           shift and go to state 68
-
-    listatokens                    shift and go to state 67
-
-state 56
-
-    (23) regra_l -> REGEX RETURN . ( PLICA PALMA PLICA TVALUE
-
-    (               shift and go to state 69
-
-
-state 57
-
-    (24) regra_l -> REGEX ERROR . ( PALMI QUOTES , TLSKIP )
+    (22) regra_l -> REGEX RETURN . ( PLICA PALMA PLICA TVALUE
 
     (               shift and go to state 70
 
 
+state 56
+
+    (23) regra_l -> REGEX ERROR . ( PALMI QUOTES , TLSKIP )
+
+    (               shift and go to state 71
+
+
+state 57
+
+    (29) precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF .
+
+    TS              reduce using rule 29 (precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF .)
+
+
 state 58
 
-    (28) precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF .
+    (30) conteudo_prec -> conteudo_prec tuplo .
 
-    TS              reduce using rule 28 (precedence -> PERCENTAGEM PRECEDENCE_T = PARRETOA conteudo_prec PARRETOF .)
+    PARRETOF        reduce using rule 30 (conteudo_prec -> conteudo_prec tuplo .)
+    (               reduce using rule 30 (conteudo_prec -> conteudo_prec tuplo .)
 
 
 state 59
 
-    (29) conteudo_prec -> tuplo , . tuplo , tuplo_2 ,
-    (30) tuplo -> . ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (32) tuplo -> ( . lado , PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (33) tuplo -> ( . lado , PLICA UMINUS PLICA )
+    (34) lado -> . PLICA LEFT PLICA
+    (35) lado -> . PLICA RIGHT PLICA
 
-    (               shift and go to state 42
+    PLICA           shift and go to state 73
 
-    tuplo                          shift and go to state 71
+    lado                           shift and go to state 72
 
 state 60
 
-    (30) tuplo -> ( lado . , PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (25) palavra -> PALMI .
 
-    ,               shift and go to state 72
+    CHAVS           reduce using rule 25 (palavra -> PALMI .)
+    PLICA           reduce using rule 25 (palavra -> PALMI .)
 
 
 state 61
 
-    (32) lado -> PLICA . LEFT PLICA
-    (33) lado -> PLICA . RIGHT PLICA
+    (37) regra_y -> PALMI : termo . CHAVS
+    (44) termo -> termo . PLICA simbolo_operacao PLICA fator
 
-    LEFT            shift and go to state 73
-    RIGHT           shift and go to state 74
+    CHAVS           shift and go to state 74
+    PLICA           shift and go to state 75
 
 
 state 62
 
-    (36) regra_y -> PALMI : PALMI . CHAV_A CHAV_F
-    (37) regra_y -> PALMI : PALMI . PLICA + PLICA PALMI CHAV_A CHAV_F
-    (38) regra_y -> PALMI : PALMI . PLICA - PLICA PALMI CHAV_A CHAV_F
-    (39) regra_y -> PALMI : PALMI . PLICA * PLICA PALMI CHAV_A CHAV_F
-    (40) regra_y -> PALMI : PALMI . PLICA / PLICA PALMI CHAV_A CHAV_F
+    (43) termo -> fator .
 
-    CHAV_A          shift and go to state 75
-    PLICA           shift and go to state 76
+    CHAVS           reduce using rule 43 (termo -> fator .)
+    PLICA           reduce using rule 43 (termo -> fator .)
 
 
 state 63
 
-    (35) regra_y -> PALMI : PALMA . PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-    (43) regra_y -> PALMI : PALMA . CHAV_A CHAV_F
+    (46) fator -> PLICA . ( PLICA termo PLICA ) PLICA
 
-    PLICA           shift and go to state 77
-    CHAV_A          shift and go to state 78
+    (               shift and go to state 76
 
 
 state 64
 
-    (41) regra_y -> PALMI : PLICA . - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-    (42) regra_y -> PALMI : PLICA . ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F
+    (45) fator -> palavra .
 
-    -               shift and go to state 79
-    (               shift and go to state 80
+    CHAVS           reduce using rule 45 (fator -> palavra .)
+    PLICA           reduce using rule 45 (fator -> palavra .)
 
 
 state 65
 
-    (14) ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .
+    (26) palavra -> PALMA .
 
-    PERCENTAGEM     reduce using rule 14 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
-    REGEX           reduce using rule 14 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
+    CHAVS           reduce using rule 26 (palavra -> PALMA .)
+    PLICA           reduce using rule 26 (palavra -> PALMA .)
 
 
 state 66
 
-    (15) especiais -> especiais SPECIAL .
+    (13) ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .
 
-    ASPAS           reduce using rule 15 (especiais -> especiais SPECIAL .)
-    SPECIAL         reduce using rule 15 (especiais -> especiais SPECIAL .)
+    PERCENTAGEM     reduce using rule 13 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
+    REGEX           reduce using rule 13 (ignore -> PERCENTAGEM IGNORE_T = ASPAS especiais ASPAS .)
 
 
 state 67
 
-    (17) tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens . PARRETOF
-    (20) listatokens -> listatokens . , PLICA PALMA PLICA
+    (14) especiais -> especiais SPECIAL .
 
-    PARRETOF        shift and go to state 81
-    ,               shift and go to state 82
+    ASPAS           reduce using rule 14 (especiais -> especiais SPECIAL .)
+    SPECIAL         reduce using rule 14 (especiais -> especiais SPECIAL .)
 
 
 state 68
 
-    (19) listatokens -> PLICA . PALMA PLICA
+    (16) tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens . PARRETOF
+    (19) listatokens -> listatokens . , PLICA PALMA PLICA
 
-    PALMA           shift and go to state 83
+    PARRETOF        shift and go to state 77
+    ,               shift and go to state 78
 
 
 state 69
 
-    (23) regra_l -> REGEX RETURN ( . PLICA PALMA PLICA TVALUE
+    (18) listatokens -> PLICA . PALMA PLICA
 
-    PLICA           shift and go to state 84
+    PALMA           shift and go to state 79
 
 
 state 70
 
-    (24) regra_l -> REGEX ERROR ( . PALMI QUOTES , TLSKIP )
+    (22) regra_l -> REGEX RETURN ( . PLICA PALMA PLICA TVALUE
 
-    PALMI           shift and go to state 85
+    PLICA           shift and go to state 80
 
 
 state 71
 
-    (29) conteudo_prec -> tuplo , tuplo . , tuplo_2 ,
+    (23) regra_l -> REGEX ERROR ( . PALMI QUOTES , TLSKIP )
 
-    ,               shift and go to state 86
+    PALMI           shift and go to state 81
 
 
 state 72
 
-    (30) tuplo -> ( lado , . PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (32) tuplo -> ( lado . , PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (33) tuplo -> ( lado . , PLICA UMINUS PLICA )
 
-    PLICA           shift and go to state 87
+    ,               shift and go to state 82
 
 
 state 73
 
-    (32) lado -> PLICA LEFT . PLICA
+    (34) lado -> PLICA . LEFT PLICA
+    (35) lado -> PLICA . RIGHT PLICA
 
-    PLICA           shift and go to state 88
+    LEFT            shift and go to state 83
+    RIGHT           shift and go to state 84
 
 
 state 74
 
-    (33) lado -> PLICA RIGHT . PLICA
+    (37) regra_y -> PALMI : termo CHAVS .
 
-    PLICA           shift and go to state 89
+    PALMI           reduce using rule 37 (regra_y -> PALMI : termo CHAVS .)
+    FIM             reduce using rule 37 (regra_y -> PALMI : termo CHAVS .)
 
 
 state 75
 
-    (36) regra_y -> PALMI : PALMI CHAV_A . CHAV_F
+    (44) termo -> termo PLICA . simbolo_operacao PLICA fator
+    (38) simbolo_operacao -> . +
+    (39) simbolo_operacao -> . -
+    (40) simbolo_operacao -> . *
+    (41) simbolo_operacao -> . /
+    (42) simbolo_operacao -> . =
 
-    CHAV_F          shift and go to state 90
+    +               shift and go to state 86
+    -               shift and go to state 87
+    *               shift and go to state 88
+    /               shift and go to state 89
+    =               shift and go to state 90
 
+    simbolo_operacao               shift and go to state 85
 
 state 76
 
-    (37) regra_y -> PALMI : PALMI PLICA . + PLICA PALMI CHAV_A CHAV_F
-    (38) regra_y -> PALMI : PALMI PLICA . - PLICA PALMI CHAV_A CHAV_F
-    (39) regra_y -> PALMI : PALMI PLICA . * PLICA PALMI CHAV_A CHAV_F
-    (40) regra_y -> PALMI : PALMI PLICA . / PLICA PALMI CHAV_A CHAV_F
+    (46) fator -> PLICA ( . PLICA termo PLICA ) PLICA
 
-    +               shift and go to state 91
-    -               shift and go to state 92
-    *               shift and go to state 93
-    /               shift and go to state 94
+    PLICA           shift and go to state 91
 
 
 state 77
 
-    (35) regra_y -> PALMI : PALMA PLICA . = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
+    (16) tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .
 
-    =               shift and go to state 95
+    REGEX           reduce using rule 16 (tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .)
+    PERCENTAGEM     reduce using rule 16 (tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .)
 
 
 state 78
 
-    (43) regra_y -> PALMI : PALMA CHAV_A . CHAV_F
+    (19) listatokens -> listatokens , . PLICA PALMA PLICA
 
-    CHAV_F          shift and go to state 96
+    PLICA           shift and go to state 92
 
 
 state 79
 
-    (41) regra_y -> PALMI : PLICA - . PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
+    (18) listatokens -> PLICA PALMA . PLICA
 
-    PLICA           shift and go to state 97
+    PLICA           shift and go to state 93
 
 
 state 80
 
-    (42) regra_y -> PALMI : PLICA ( . PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F
+    (22) regra_l -> REGEX RETURN ( PLICA . PALMA PLICA TVALUE
 
-    PLICA           shift and go to state 98
+    PALMA           shift and go to state 94
 
 
 state 81
 
-    (17) tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .
+    (23) regra_l -> REGEX ERROR ( PALMI . QUOTES , TLSKIP )
 
-    REGEX           reduce using rule 17 (tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .)
-    PERCENTAGEM     reduce using rule 17 (tokens -> PERCENTAGEM TOKENS_T = PARRETOA listatokens PARRETOF .)
+    QUOTES          shift and go to state 95
 
 
 state 82
 
-    (20) listatokens -> listatokens , . PLICA PALMA PLICA
+    (32) tuplo -> ( lado , . PLICA simbolo PLICA , PLICA simbolo PLICA )
+    (33) tuplo -> ( lado , . PLICA UMINUS PLICA )
 
-    PLICA           shift and go to state 99
+    PLICA           shift and go to state 96
 
 
 state 83
 
-    (19) listatokens -> PLICA PALMA . PLICA
+    (34) lado -> PLICA LEFT . PLICA
 
-    PLICA           shift and go to state 100
+    PLICA           shift and go to state 97
 
 
 state 84
 
-    (23) regra_l -> REGEX RETURN ( PLICA . PALMA PLICA TVALUE
+    (35) lado -> PLICA RIGHT . PLICA
 
-    PALMA           shift and go to state 101
+    PLICA           shift and go to state 98
 
 
 state 85
 
-    (24) regra_l -> REGEX ERROR ( PALMI . QUOTES , TLSKIP )
+    (44) termo -> termo PLICA simbolo_operacao . PLICA fator
 
-    QUOTES          shift and go to state 102
+    PLICA           shift and go to state 99
 
 
 state 86
 
-    (29) conteudo_prec -> tuplo , tuplo , . tuplo_2 ,
-    (31) tuplo_2 -> . ( lado , PLICA UMINUS PLICA )
+    (38) simbolo_operacao -> + .
 
-    (               shift and go to state 104
+    PLICA           reduce using rule 38 (simbolo_operacao -> + .)
 
-    tuplo_2                        shift and go to state 103
 
 state 87
 
-    (30) tuplo -> ( lado , PLICA . simbolo PLICA , PLICA simbolo PLICA )
-    (5) simbolo -> . +
-    (6) simbolo -> . -
-    (7) simbolo -> . *
-    (8) simbolo -> . /
-    (9) simbolo -> . =
-    (10) simbolo -> . (
-    (11) simbolo -> . )
-    (12) simbolo -> .
+    (39) simbolo_operacao -> - .
 
-    +               shift and go to state 48
-    -               shift and go to state 49
-    *               shift and go to state 50
-    /               shift and go to state 51
-    =               shift and go to state 45
-    (               shift and go to state 52
-    )               shift and go to state 53
-    PLICA           reduce using rule 12 (simbolo -> .)
+    PLICA           reduce using rule 39 (simbolo_operacao -> - .)
 
-    simbolo                        shift and go to state 105
 
 state 88
 
-    (32) lado -> PLICA LEFT PLICA .
+    (40) simbolo_operacao -> * .
 
-    ,               reduce using rule 32 (lado -> PLICA LEFT PLICA .)
+    PLICA           reduce using rule 40 (simbolo_operacao -> * .)
 
 
 state 89
 
-    (33) lado -> PLICA RIGHT PLICA .
+    (41) simbolo_operacao -> / .
 
-    ,               reduce using rule 33 (lado -> PLICA RIGHT PLICA .)
+    PLICA           reduce using rule 41 (simbolo_operacao -> / .)
 
 
 state 90
 
-    (36) regra_y -> PALMI : PALMI CHAV_A CHAV_F .
+    (42) simbolo_operacao -> = .
 
-    PALMI           reduce using rule 36 (regra_y -> PALMI : PALMI CHAV_A CHAV_F .)
-    $end            reduce using rule 36 (regra_y -> PALMI : PALMI CHAV_A CHAV_F .)
+    PLICA           reduce using rule 42 (simbolo_operacao -> = .)
 
 
 state 91
 
-    (37) regra_y -> PALMI : PALMI PLICA + . PLICA PALMI CHAV_A CHAV_F
+    (46) fator -> PLICA ( PLICA . termo PLICA ) PLICA
+    (43) termo -> . fator
+    (44) termo -> . termo PLICA simbolo_operacao PLICA fator
+    (45) fator -> . palavra
+    (46) fator -> . PLICA ( PLICA termo PLICA ) PLICA
+    (25) palavra -> . PALMI
+    (26) palavra -> . PALMA
 
-    PLICA           shift and go to state 106
+    PLICA           shift and go to state 63
+    PALMI           shift and go to state 60
+    PALMA           shift and go to state 65
 
+    termo                          shift and go to state 100
+    fator                          shift and go to state 62
+    palavra                        shift and go to state 64
 
 state 92
 
-    (38) regra_y -> PALMI : PALMI PLICA - . PLICA PALMI CHAV_A CHAV_F
+    (19) listatokens -> listatokens , PLICA . PALMA PLICA
 
-    PLICA           shift and go to state 107
+    PALMA           shift and go to state 101
 
 
 state 93
 
-    (39) regra_y -> PALMI : PALMI PLICA * . PLICA PALMI CHAV_A CHAV_F
+    (18) listatokens -> PLICA PALMA PLICA .
 
-    PLICA           shift and go to state 108
+    PARRETOF        reduce using rule 18 (listatokens -> PLICA PALMA PLICA .)
+    ,               reduce using rule 18 (listatokens -> PLICA PALMA PLICA .)
 
 
 state 94
 
-    (40) regra_y -> PALMI : PALMI PLICA / . PLICA PALMI CHAV_A CHAV_F
+    (22) regra_l -> REGEX RETURN ( PLICA PALMA . PLICA TVALUE
 
-    PLICA           shift and go to state 109
+    PLICA           shift and go to state 102
 
 
 state 95
 
-    (35) regra_y -> PALMI : PALMA PLICA = . PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
+    (23) regra_l -> REGEX ERROR ( PALMI QUOTES . , TLSKIP )
 
-    PLICA           shift and go to state 110
+    ,               shift and go to state 103
 
 
 state 96
 
-    (43) regra_y -> PALMI : PALMA CHAV_A CHAV_F .
-
-    PALMI           reduce using rule 43 (regra_y -> PALMI : PALMA CHAV_A CHAV_F .)
-    $end            reduce using rule 43 (regra_y -> PALMI : PALMA CHAV_A CHAV_F .)
-
-
-state 97
-
-    (41) regra_y -> PALMI : PLICA - PLICA . PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-
-    PALMI           shift and go to state 111
-
-
-state 98
-
-    (42) regra_y -> PALMI : PLICA ( PLICA . PALMI PLICA ) PLICA CHAV_A CHAV_F
-
-    PALMI           shift and go to state 112
-
-
-state 99
-
-    (20) listatokens -> listatokens , PLICA . PALMA PLICA
-
-    PALMA           shift and go to state 113
-
-
-state 100
-
-    (19) listatokens -> PLICA PALMA PLICA .
-
-    PARRETOF        reduce using rule 19 (listatokens -> PLICA PALMA PLICA .)
-    ,               reduce using rule 19 (listatokens -> PLICA PALMA PLICA .)
-
-
-state 101
-
-    (23) regra_l -> REGEX RETURN ( PLICA PALMA . PLICA TVALUE
-
-    PLICA           shift and go to state 114
-
-
-state 102
-
-    (24) regra_l -> REGEX ERROR ( PALMI QUOTES . , TLSKIP )
-
-    ,               shift and go to state 115
-
-
-state 103
-
-    (29) conteudo_prec -> tuplo , tuplo , tuplo_2 . ,
-
-    ,               shift and go to state 116
-
-
-state 104
-
-    (31) tuplo_2 -> ( . lado , PLICA UMINUS PLICA )
-    (32) lado -> . PLICA LEFT PLICA
-    (33) lado -> . PLICA RIGHT PLICA
-
-    PLICA           shift and go to state 61
-
-    lado                           shift and go to state 117
-
-state 105
-
-    (30) tuplo -> ( lado , PLICA simbolo . PLICA , PLICA simbolo PLICA )
-
-    PLICA           shift and go to state 118
-
-
-state 106
-
-    (37) regra_y -> PALMI : PALMI PLICA + PLICA . PALMI CHAV_A CHAV_F
-
-    PALMI           shift and go to state 119
-
-
-state 107
-
-    (38) regra_y -> PALMI : PALMI PLICA - PLICA . PALMI CHAV_A CHAV_F
-
-    PALMI           shift and go to state 120
-
-
-state 108
-
-    (39) regra_y -> PALMI : PALMI PLICA * PLICA . PALMI CHAV_A CHAV_F
-
-    PALMI           shift and go to state 121
-
-
-state 109
-
-    (40) regra_y -> PALMI : PALMI PLICA / PLICA . PALMI CHAV_A CHAV_F
-
-    PALMI           shift and go to state 122
-
-
-state 110
-
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA . PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-
-    PALMI           shift and go to state 123
-
-
-state 111
-
-    (41) regra_y -> PALMI : PLICA - PLICA PALMI . PERCENTAGEM NEG UMINUS CHAV_A CHAV_F
-
-    PERCENTAGEM     shift and go to state 124
-
-
-state 112
-
-    (42) regra_y -> PALMI : PLICA ( PLICA PALMI . PLICA ) PLICA CHAV_A CHAV_F
-
-    PLICA           shift and go to state 125
-
-
-state 113
-
-    (20) listatokens -> listatokens , PLICA PALMA . PLICA
-
-    PLICA           shift and go to state 126
-
-
-state 114
-
-    (23) regra_l -> REGEX RETURN ( PLICA PALMA PLICA . TVALUE
-
-    TVALUE          shift and go to state 127
-
-
-state 115
-
-    (24) regra_l -> REGEX ERROR ( PALMI QUOTES , . TLSKIP )
-
-    TLSKIP          shift and go to state 128
-
-
-state 116
-
-    (29) conteudo_prec -> tuplo , tuplo , tuplo_2 , .
-
-    PARRETOF        reduce using rule 29 (conteudo_prec -> tuplo , tuplo , tuplo_2 , .)
-
-
-state 117
-
-    (31) tuplo_2 -> ( lado . , PLICA UMINUS PLICA )
-
-    ,               shift and go to state 129
-
-
-state 118
-
-    (30) tuplo -> ( lado , PLICA simbolo PLICA . , PLICA simbolo PLICA )
-
-    ,               shift and go to state 130
-
-
-state 119
-
-    (37) regra_y -> PALMI : PALMI PLICA + PLICA PALMI . CHAV_A CHAV_F
-
-    CHAV_A          shift and go to state 131
-
-
-state 120
-
-    (38) regra_y -> PALMI : PALMI PLICA - PLICA PALMI . CHAV_A CHAV_F
-
-    CHAV_A          shift and go to state 132
-
-
-state 121
-
-    (39) regra_y -> PALMI : PALMI PLICA * PLICA PALMI . CHAV_A CHAV_F
-
-    CHAV_A          shift and go to state 133
-
-
-state 122
-
-    (40) regra_y -> PALMI : PALMI PLICA / PLICA PALMI . CHAV_A CHAV_F
-
-    CHAV_A          shift and go to state 134
-
-
-state 123
-
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI . CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-
-    CHAV_A          shift and go to state 135
-
-
-state 124
-
-    (41) regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM . NEG UMINUS CHAV_A CHAV_F
-
-    NEG             shift and go to state 136
-
-
-state 125
-
-    (42) regra_y -> PALMI : PLICA ( PLICA PALMI PLICA . ) PLICA CHAV_A CHAV_F
-
-    )               shift and go to state 137
-
-
-state 126
-
-    (20) listatokens -> listatokens , PLICA PALMA PLICA .
-
-    PARRETOF        reduce using rule 20 (listatokens -> listatokens , PLICA PALMA PLICA .)
-    ,               reduce using rule 20 (listatokens -> listatokens , PLICA PALMA PLICA .)
-
-
-state 127
-
-    (23) regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE .
-
-    REGEX           reduce using rule 23 (regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE .)
-    PERCENTAGEM     reduce using rule 23 (regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE .)
-
-
-state 128
-
-    (24) regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP . )
-
-    )               shift and go to state 138
-
-
-state 129
-
-    (31) tuplo_2 -> ( lado , . PLICA UMINUS PLICA )
-
-    PLICA           shift and go to state 139
-
-
-state 130
-
-    (30) tuplo -> ( lado , PLICA simbolo PLICA , . PLICA simbolo PLICA )
-
-    PLICA           shift and go to state 140
-
-
-state 131
-
-    (37) regra_y -> PALMI : PALMI PLICA + PLICA PALMI CHAV_A . CHAV_F
-
-    CHAV_F          shift and go to state 141
-
-
-state 132
-
-    (38) regra_y -> PALMI : PALMI PLICA - PLICA PALMI CHAV_A . CHAV_F
-
-    CHAV_F          shift and go to state 142
-
-
-state 133
-
-    (39) regra_y -> PALMI : PALMI PLICA * PLICA PALMI CHAV_A . CHAV_F
-
-    CHAV_F          shift and go to state 143
-
-
-state 134
-
-    (40) regra_y -> PALMI : PALMI PLICA / PLICA PALMI CHAV_A . CHAV_F
-
-    CHAV_F          shift and go to state 144
-
-
-state 135
-
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A . TS PARRETOA TVAR PARRETOF = TVAR CHAV_F
-
-    TS              shift and go to state 145
-
-
-state 136
-
-    (41) regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG . UMINUS CHAV_A CHAV_F
-
-    UMINUS          shift and go to state 146
-
-
-state 137
-
-    (42) regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) . PLICA CHAV_A CHAV_F
-
-    PLICA           shift and go to state 147
-
-
-state 138
-
-    (24) regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP ) .
-
-    REGEX           reduce using rule 24 (regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP ) .)
-    PERCENTAGEM     reduce using rule 24 (regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP ) .)
-
-
-state 139
-
-    (31) tuplo_2 -> ( lado , PLICA . UMINUS PLICA )
-
-    UMINUS          shift and go to state 148
-
-
-state 140
-
-    (30) tuplo -> ( lado , PLICA simbolo PLICA , PLICA . simbolo PLICA )
+    (32) tuplo -> ( lado , PLICA . simbolo PLICA , PLICA simbolo PLICA )
+    (33) tuplo -> ( lado , PLICA . UMINUS PLICA )
     (5) simbolo -> . +
     (6) simbolo -> . -
     (7) simbolo -> . *
@@ -1345,195 +1022,235 @@ state 140
     (9) simbolo -> . =
     (10) simbolo -> . (
     (11) simbolo -> . )
-    (12) simbolo -> .
 
-    +               shift and go to state 48
-    -               shift and go to state 49
-    *               shift and go to state 50
-    /               shift and go to state 51
-    =               shift and go to state 45
-    (               shift and go to state 52
-    )               shift and go to state 53
-    PLICA           reduce using rule 12 (simbolo -> .)
+    UMINUS          shift and go to state 105
+    +               shift and go to state 47
+    -               shift and go to state 48
+    *               shift and go to state 49
+    /               shift and go to state 50
+    =               shift and go to state 44
+    (               shift and go to state 51
+    )               shift and go to state 52
 
-    simbolo                        shift and go to state 149
+    simbolo                        shift and go to state 104
 
-state 141
+state 97
 
-    (37) regra_y -> PALMI : PALMI PLICA + PLICA PALMI CHAV_A CHAV_F .
+    (34) lado -> PLICA LEFT PLICA .
 
-    PALMI           reduce using rule 37 (regra_y -> PALMI : PALMI PLICA + PLICA PALMI CHAV_A CHAV_F .)
-    $end            reduce using rule 37 (regra_y -> PALMI : PALMI PLICA + PLICA PALMI CHAV_A CHAV_F .)
+    ,               reduce using rule 34 (lado -> PLICA LEFT PLICA .)
 
 
-state 142
+state 98
 
-    (38) regra_y -> PALMI : PALMI PLICA - PLICA PALMI CHAV_A CHAV_F .
+    (35) lado -> PLICA RIGHT PLICA .
 
-    PALMI           reduce using rule 38 (regra_y -> PALMI : PALMI PLICA - PLICA PALMI CHAV_A CHAV_F .)
-    $end            reduce using rule 38 (regra_y -> PALMI : PALMI PLICA - PLICA PALMI CHAV_A CHAV_F .)
+    ,               reduce using rule 35 (lado -> PLICA RIGHT PLICA .)
 
 
-state 143
+state 99
 
-    (39) regra_y -> PALMI : PALMI PLICA * PLICA PALMI CHAV_A CHAV_F .
+    (44) termo -> termo PLICA simbolo_operacao PLICA . fator
+    (45) fator -> . palavra
+    (46) fator -> . PLICA ( PLICA termo PLICA ) PLICA
+    (25) palavra -> . PALMI
+    (26) palavra -> . PALMA
 
-    PALMI           reduce using rule 39 (regra_y -> PALMI : PALMI PLICA * PLICA PALMI CHAV_A CHAV_F .)
-    $end            reduce using rule 39 (regra_y -> PALMI : PALMI PLICA * PLICA PALMI CHAV_A CHAV_F .)
+    PLICA           shift and go to state 63
+    PALMI           shift and go to state 60
+    PALMA           shift and go to state 65
 
+    fator                          shift and go to state 106
+    palavra                        shift and go to state 64
 
-state 144
+state 100
 
-    (40) regra_y -> PALMI : PALMI PLICA / PLICA PALMI CHAV_A CHAV_F .
+    (46) fator -> PLICA ( PLICA termo . PLICA ) PLICA
+    (44) termo -> termo . PLICA simbolo_operacao PLICA fator
 
-    PALMI           reduce using rule 40 (regra_y -> PALMI : PALMI PLICA / PLICA PALMI CHAV_A CHAV_F .)
-    $end            reduce using rule 40 (regra_y -> PALMI : PALMI PLICA / PLICA PALMI CHAV_A CHAV_F .)
+    PLICA           shift and go to state 107
 
 
-state 145
+state 101
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS . PARRETOA TVAR PARRETOF = TVAR CHAV_F
+    (19) listatokens -> listatokens , PLICA PALMA . PLICA
 
-    PARRETOA        shift and go to state 150
+    PLICA           shift and go to state 108
 
 
-state 146
+state 102
 
-    (41) regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS . CHAV_A CHAV_F
+    (22) regra_l -> REGEX RETURN ( PLICA PALMA PLICA . TVALUE
 
-    CHAV_A          shift and go to state 151
+    TVALUE          shift and go to state 109
 
 
-state 147
+state 103
 
-    (42) regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) PLICA . CHAV_A CHAV_F
+    (23) regra_l -> REGEX ERROR ( PALMI QUOTES , . TLSKIP )
 
-    CHAV_A          shift and go to state 152
+    TLSKIP          shift and go to state 110
 
 
-state 148
+state 104
 
-    (31) tuplo_2 -> ( lado , PLICA UMINUS . PLICA )
+    (32) tuplo -> ( lado , PLICA simbolo . PLICA , PLICA simbolo PLICA )
 
-    PLICA           shift and go to state 153
+    PLICA           shift and go to state 111
 
 
-state 149
+state 105
 
-    (30) tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo . PLICA )
+    (33) tuplo -> ( lado , PLICA UMINUS . PLICA )
 
-    PLICA           shift and go to state 154
+    PLICA           shift and go to state 112
 
 
-state 150
+state 106
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA . TVAR PARRETOF = TVAR CHAV_F
+    (44) termo -> termo PLICA simbolo_operacao PLICA fator .
 
-    TVAR            shift and go to state 155
+    CHAVS           reduce using rule 44 (termo -> termo PLICA simbolo_operacao PLICA fator .)
+    PLICA           reduce using rule 44 (termo -> termo PLICA simbolo_operacao PLICA fator .)
 
 
-state 151
+state 107
 
-    (41) regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A . CHAV_F
+    (46) fator -> PLICA ( PLICA termo PLICA . ) PLICA
+    (44) termo -> termo PLICA . simbolo_operacao PLICA fator
+    (38) simbolo_operacao -> . +
+    (39) simbolo_operacao -> . -
+    (40) simbolo_operacao -> . *
+    (41) simbolo_operacao -> . /
+    (42) simbolo_operacao -> . =
 
-    CHAV_F          shift and go to state 156
+    )               shift and go to state 113
+    +               shift and go to state 86
+    -               shift and go to state 87
+    *               shift and go to state 88
+    /               shift and go to state 89
+    =               shift and go to state 90
 
+    simbolo_operacao               shift and go to state 85
 
-state 152
+state 108
 
-    (42) regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A . CHAV_F
+    (19) listatokens -> listatokens , PLICA PALMA PLICA .
 
-    CHAV_F          shift and go to state 157
+    PARRETOF        reduce using rule 19 (listatokens -> listatokens , PLICA PALMA PLICA .)
+    ,               reduce using rule 19 (listatokens -> listatokens , PLICA PALMA PLICA .)
 
 
-state 153
+state 109
 
-    (31) tuplo_2 -> ( lado , PLICA UMINUS PLICA . )
+    (22) regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE .
 
-    )               shift and go to state 158
+    REGEX           reduce using rule 22 (regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE .)
+    PERCENTAGEM     reduce using rule 22 (regra_l -> REGEX RETURN ( PLICA PALMA PLICA TVALUE .)
 
 
-state 154
+state 110
 
-    (30) tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA . )
+    (23) regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP . )
 
-    )               shift and go to state 159
+    )               shift and go to state 114
 
 
-state 155
+state 111
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR . PARRETOF = TVAR CHAV_F
+    (32) tuplo -> ( lado , PLICA simbolo PLICA . , PLICA simbolo PLICA )
 
-    PARRETOF        shift and go to state 160
+    ,               shift and go to state 115
 
 
-state 156
+state 112
 
-    (41) regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F .
+    (33) tuplo -> ( lado , PLICA UMINUS PLICA . )
 
-    PALMI           reduce using rule 41 (regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F .)
-    $end            reduce using rule 41 (regra_y -> PALMI : PLICA - PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F .)
+    )               shift and go to state 116
 
 
-state 157
+state 113
 
-    (42) regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F .
+    (46) fator -> PLICA ( PLICA termo PLICA ) . PLICA
 
-    PALMI           reduce using rule 42 (regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F .)
-    $end            reduce using rule 42 (regra_y -> PALMI : PLICA ( PLICA PALMI PLICA ) PLICA CHAV_A CHAV_F .)
+    PLICA           shift and go to state 117
 
 
-state 158
+state 114
 
-    (31) tuplo_2 -> ( lado , PLICA UMINUS PLICA ) .
+    (23) regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP ) .
 
-    ,               reduce using rule 31 (tuplo_2 -> ( lado , PLICA UMINUS PLICA ) .)
+    REGEX           reduce using rule 23 (regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP ) .)
+    PERCENTAGEM     reduce using rule 23 (regra_l -> REGEX ERROR ( PALMI QUOTES , TLSKIP ) .)
 
 
-state 159
+state 115
 
-    (30) tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA ) .
+    (32) tuplo -> ( lado , PLICA simbolo PLICA , . PLICA simbolo PLICA )
 
-    ,               reduce using rule 30 (tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA ) .)
+    PLICA           shift and go to state 118
 
 
-state 160
+state 116
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF . = TVAR CHAV_F
+    (33) tuplo -> ( lado , PLICA UMINUS PLICA ) .
 
-    =               shift and go to state 161
+    PARRETOF        reduce using rule 33 (tuplo -> ( lado , PLICA UMINUS PLICA ) .)
+    (               reduce using rule 33 (tuplo -> ( lado , PLICA UMINUS PLICA ) .)
 
 
-state 161
+state 117
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = . TVAR CHAV_F
+    (46) fator -> PLICA ( PLICA termo PLICA ) PLICA .
 
-    TVAR            shift and go to state 162
+    CHAVS           reduce using rule 46 (fator -> PLICA ( PLICA termo PLICA ) PLICA .)
+    PLICA           reduce using rule 46 (fator -> PLICA ( PLICA termo PLICA ) PLICA .)
 
 
-state 162
+state 118
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR . CHAV_F
+    (32) tuplo -> ( lado , PLICA simbolo PLICA , PLICA . simbolo PLICA )
+    (5) simbolo -> . +
+    (6) simbolo -> . -
+    (7) simbolo -> . *
+    (8) simbolo -> . /
+    (9) simbolo -> . =
+    (10) simbolo -> . (
+    (11) simbolo -> . )
 
-    CHAV_F          shift and go to state 163
+    +               shift and go to state 47
+    -               shift and go to state 48
+    *               shift and go to state 49
+    /               shift and go to state 50
+    =               shift and go to state 44
+    (               shift and go to state 51
+    )               shift and go to state 52
 
+    simbolo                        shift and go to state 119
 
-state 163
+state 119
 
-    (35) regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F .
+    (32) tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo . PLICA )
 
-    PALMI           reduce using rule 35 (regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F .)
-    $end            reduce using rule 35 (regra_y -> PALMI : PALMA PLICA = PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF = TVAR CHAV_F .)
+    PLICA           shift and go to state 120
+
+
+state 120
+
+    (32) tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA . )
+
+    )               shift and go to state 121
+
+
+state 121
+
+    (32) tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA ) .
+
+    PARRETOF        reduce using rule 32 (tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA ) .)
+    (               reduce using rule 32 (tuplo -> ( lado , PLICA simbolo PLICA , PLICA simbolo PLICA ) .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PERCENTAGEM in state 16 resolved as shift
-WARNING: shift/reduce conflict for ASPAS in state 35 resolved as shift
-WARNING: shift/reduce conflict for + in state 35 resolved as shift
-WARNING: shift/reduce conflict for - in state 35 resolved as shift
-WARNING: shift/reduce conflict for * in state 35 resolved as shift
-WARNING: shift/reduce conflict for / in state 35 resolved as shift
-WARNING: shift/reduce conflict for = in state 35 resolved as shift
-WARNING: shift/reduce conflict for ( in state 35 resolved as shift
-WARNING: shift/reduce conflict for ) in state 35 resolved as shift
+WARNING: shift/reduce conflict for PERCENTAGEM in state 18 resolved as shift

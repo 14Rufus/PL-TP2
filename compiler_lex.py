@@ -1,11 +1,11 @@
 import ply.lex as lex
 
 
-tokens = ['LEX_T', 'YACC_T', 'LEFT', 'RIGHT', 'TS', 
-            'CHAV_A', 'NEG', 'UMINUS', 'CHAV_F', 'TVALUE', 'QUOTES', 
+tokens = ['LEX_T', 'YACC_T', 'LEFT', 'RIGHT', 'TS', 'CHAVS', 'FIM',
+            'CHAV_A', 'NEG', 'UMINUS', 'CHAV_F', 'TVALUE', 'QUOTES', 'PRINT',
             'TVAR', 'TLSKIP', 'PERCENTAGEM', 'PARRETOA', 'PARRETOF', 'ASPAS', 
-            'PRECEDENCE_T','PLICA', 'LITERALS_T', 'IGNORE_T', 'TOKENS_T', 
-            'PALMA', 'PALMI', 'SPECIAL', 'REGEX', 'RETURN', 'ERROR'] 
+            'PRECEDENCE_T', 'PLICA', 'LITERALS_T', 'IGNORE_T', 'TOKENS_T', 
+            'GETVAL', 'PALMA', 'PALMI', 'SPECIAL', 'REGEX', 'RETURN', 'ERROR'] 
 
 
 
@@ -26,15 +26,21 @@ def t_TVALUE(t):
     t.value = str(t.value)
     return t
 
-def t_CHAV_A(t):  #\t \n ou espaço
-    r'{'
+def t_CHAVS(t):
+    r'\{.*?\}' #!!! espaço antes do t.value para nao entrar em conflito com o return do error
     t.value = str(t.value)
     return t
 
-def t_CHAV_F(t):  #\t \n ou espaço
-    r'}'
-    t.value = str(t.value)
-    return t
+
+#def t_CHAV_A(t):  #\t \n ou espaço
+#    r'{'
+#    t.value = str(t.value)
+#    return t
+
+#def t_CHAV_F(t):  #\t \n ou espaço
+#    r'}'
+#    t.value = str(t.value)
+#    return t
 
 def t_PRECEDENCE_T(t):
     r'precedence\ *'
@@ -81,6 +87,21 @@ def t_UMINUS(t):
     t.value = str(t.value)
     return t
 
+
+def t_FIM(t):
+    r'~~(.| |\n|\t)+?~~'
+    t.value = str(t.value)
+    return t
+
+def t_PRINT(t):
+    r'print'
+    t.value = str(t.value)
+    return t
+
+def t_GETVAL(t):
+    r'getval'
+    t.value = str(t.value)
+    return t
 
 #def t_IGUAL(t):
 #    r'='
@@ -138,12 +159,12 @@ def t_ERROR(t): #erro da gramatica
     t.value = str(t.value)
     return t
 
-def t_PALMA(t): #PALM -> palavra maiuscula
+def t_PALMA(t): #PALMA -> palavra maiuscula
     r'[A-Z]+'
     t.value = str(t.value)
     return t
 
-def t_PALMI(t): #PALM -> palavra maiuscula
+def t_PALMI(t): #PALMI -> palavra maiuscula
     r'[a-z]+'
     t.value = str(t.value)
     return t

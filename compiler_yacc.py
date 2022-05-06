@@ -4,8 +4,8 @@ from compiler_lex import tokens
 from compiler_lex import literals
 
 def p_body(p):
-    "body : lex yacc"
-    p[0] = p[1]
+    "body : lex yacc funcoes"
+    p[0] = p[1] + "\n" + p[2] +"\n" + p[3]
 
 
 
@@ -34,7 +34,6 @@ def p_simbolo(p):
                | '='
                | '('
                | ')'
-               |
     """
     p[0] = p[1]
 
@@ -95,26 +94,39 @@ def p_regra_error(p):
 
 ######################### YACC ############################################
 
-def p_regras_y(p):
-    "regras_y : regras_y regra_y"
-
-def p_regras_y_vazio(p):
-    "regras_y : "
 
 def p_yacc(p):
     "yacc : PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y"
+    p[0] = p[6]
+
+def p_palavra(p):
+    """palavra : PALMI
+               | PALMA   
+    """
+
+def p_regras_y(p):
+    "regras_y : regras_y regra_y"
+    p[0] = p[1] + "\n" +p[2]
+
+def p_regras_y_vazio(p):
+    "regras_y : "
+    p[0] = ""
+
 
 def p_precedence(p):
     "precedence : PERCENTAGEM PRECEDENCE_T '=' PARRETOA conteudo_prec PARRETOF"
 
 def p_conteudo_prec(p):
-    "conteudo_prec : tuplo ',' tuplo ',' tuplo_2 ','"
+    "conteudo_prec : conteudo_prec tuplo"
+
+def p_conteudo_prec_vazio(p):
+    "conteudo_prec : "
 
 def p_tuplo(p):
     "tuplo : '(' lado ',' PLICA simbolo PLICA ',' PLICA simbolo PLICA ')'"
 
 def p_tuplo_2(p):
-    "tuplo_2 : '(' lado ',' PLICA UMINUS PLICA ')'"
+    "tuplo : '(' lado ',' PLICA UMINUS PLICA ')'"
 
 def p_lado_l(p):
     "lado : PLICA LEFT PLICA"
@@ -123,43 +135,52 @@ def p_lado_r(p):
     "lado : PLICA RIGHT PLICA"
 
 def p_symboltable(p):
-    "symboltable : TS '=' CHAV_A CHAV_F"
+    "symboltable : TS '=' CHAVS"
 
 
-########### REVER
-def p_regras_stat(p):
-    "regra_y : PALMI ':' PALMA PLICA '=' PLICA PALMI CHAV_A TS PARRETOA TVAR PARRETOF '=' TVAR CHAV_F"  
+def p_regra_y(p):
+    "regra_y : PALMI ':' termo CHAVS"
+    if p[1] not in p.parser.gramaticas:
+        p.parser.gramaticas[p[1]]=0
+    else:
+        p.parser.gramaticas[p[1]]+=1
+    #print(p.parser.gramaticas)
+    i=p.parser.gramaticas[p[1]]
+    if i==0:
+        p[0] = f"def p_{p[1]}(p): \n"
+    else:
+        p[0] = f"def p_{p[1]}_{i}(p): \n"
 
-def p_regras_stat_e(p):
-    "regra_y : PALMI ':' PALMI CHAV_A CHAV_F"
-
-def p_regras_exp_add(p):
-    "regra_y : PALMI ':' PALMI PLICA '+' PLICA PALMI CHAV_A CHAV_F"
-
-def p_regras_exp_sub(p):
-    "regra_y : PALMI ':' PALMI PLICA '-' PLICA PALMI CHAV_A CHAV_F"
-
-def p_regras_exp_mul(p):
-    "regra_y : PALMI ':' PALMI PLICA '*' PLICA PALMI CHAV_A CHAV_F"
-
-def p_regras_exp_div(p):
-    "regra_y : PALMI ':' PALMI PLICA '/' PLICA PALMI CHAV_A CHAV_F"
-
-def p_regras_exp_uminus(p):
-    "regra_y : PALMI ':' PLICA '-' PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A CHAV_F"
-
-def p_regras_exp_par(p):
-    "regra_y : PALMI ':' PLICA '(' PLICA PALMI PLICA ')' PLICA CHAV_A CHAV_F"
-
-def p_regras_exp_num(p):
-    "regra_y : PALMI ':' PALMA CHAV_A CHAV_F"
-
-#igual à de cima
-#def p_regras_exp_var(p):
-    #"regras_y : EXP ':' PALM CHAV_A CHAV_F"
+    p[0] += f'\t"{p[1]} : p[3]" \n' 
+    p[0] += f'\t{p[4][1:len(p[4])-1].strip()} \n' 
 
 
+#def p_regras_exp_uminus(p):
+#    "regra_y : PALMI ':' PLICA '-' PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A TVAR '=' '-' TVAR CHAV_F"
 
+def p_simbolo_operacao(p):
+    """simbolo_operacao : '+'
+                        | '-'
+                        | '*'
+                        | '/'
+                        | '='
+    """
+
+def p_termo_fators(p):
+    "termo : fator"   
+
+def p_termo(p):
+    "termo : termo PLICA simbolo_operacao PLICA fator"
+
+def p_fator(p):
+    "fator : palavra "
+
+def p_fator_termo(p):
+    "fator : PLICA '(' PLICA termo PLICA ')' PLICA" 
+
+def p_funcoes(p):
+    "funcoes : FIM"
+    p[0] = p[1][2:len(p[1])-2]
 
 def p_error(p):
     print("Syntax error! ",p)
@@ -167,6 +188,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 parser.tokens = []
+parser.gramaticas = {}
 
 
 with open('teste4.txt',"r") as f:
