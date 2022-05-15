@@ -1,7 +1,0 @@
-%%LEX
-%literals = "+-/*=()"
-%ignore = " \t\n"
-%tokens = [ 'VAR','NUMBER' ]
-ç return()
-ç return()
-ç error()

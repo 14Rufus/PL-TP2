@@ -43,7 +43,7 @@ def p_simbolos_vazio(p):
 
 def p_ignore(p):
     "ignore : PERCENTAGEM IGNORE_T '=' ASPAS especiais ASPAS"
-    p[0] = "\nt_ignore = " + p[4] + " " + p[5] + p[6] + "\n"   #espaço harcoded pq esta a ser ignorado
+    p[0] = "\nt_ignore = " + p[4] + " " + p[5] + p[6] + "\n"  
 
 def p_especiais(p):
     "especiais : especiais SPECIAL"
@@ -103,6 +103,7 @@ def p_palavra(p):
     """palavra : PALMI
                | PALMA   
     """
+    p[0] = p[1]
 
 def p_regras_y(p):
     "regras_y : regras_y regra_y"
@@ -144,19 +145,19 @@ def p_regra_y(p):
         p.parser.gramaticas[p[1]]=0
     else:
         p.parser.gramaticas[p[1]]+=1
-    #print(p.parser.gramaticas)
     i=p.parser.gramaticas[p[1]]
     if i==0:
-        p[0] = f"def p_{p[1]}(p): \n"
+        p[0] = f"def p_{p[1]}(t): \n"
     else:
-        p[0] = f"def p_{p[1]}_{i}(p): \n"
+        p[0] = f"def p_{p[1]}_{i}(t): \n"
 
-    p[0] += f'\t"{p[1]} : p[3]" \n' 
+    p[0] += f'\t"{p[1]} : {p[3]}" \n'
     p[0] += f'\t{p[4][1:len(p[4])-1].strip()} \n' 
 
 
 #def p_regras_exp_uminus(p):
 #    "regra_y : PALMI ':' PLICA '-' PLICA PALMI PERCENTAGEM NEG UMINUS CHAV_A TVAR '=' '-' TVAR CHAV_F"
+    #p[0] = 
 
 def p_simbolo_operacao(p):
     """simbolo_operacao : '+'
@@ -165,18 +166,25 @@ def p_simbolo_operacao(p):
                         | '/'
                         | '='
     """
+    p[0] = p[1]
 
 def p_termo_fators(p):
-    "termo : fator"   
+    "termo : fator" 
+    p[0] = p[1]  
 
 def p_termo(p):
     "termo : termo PLICA simbolo_operacao PLICA fator"
+    p[0] = p[1] + " " + "'" + p[3] + "'" + " " + p[5]
+
 
 def p_fator(p):
     "fator : palavra "
+    p[0] = p[1]
 
 def p_fator_termo(p):
     "fator : PLICA '(' PLICA termo PLICA ')' PLICA" 
+    p[0] = p[4]
+
 
 def p_funcoes(p):
     "funcoes : FIM"
@@ -191,9 +199,29 @@ parser.tokens = []
 parser.gramaticas = {}
 
 
-with open('teste4.txt',"r") as f:
-    parser.success = True
-    data = f.read()
-    #print(data)
-    result = parser.parse(data)
-    print(result)
+#with open('teste4.txt',"r") as f:
+#    parser.success = True
+#    data = f.read()
+#    result = parser.parse(data)
+#    #print(result)
+
+
+q = 0
+
+while q == 0:
+    inputFile = input('File to read >> ')
+    try:
+        file = open(inputFile, 'r')
+        q = 1
+    except OSError:
+        print('Ficheiro inválido')
+
+fileOutput = input('Output file >> ')
+fileOut = open(fileOutput, 'w+')
+
+fileData = file.read()
+result = parser.parse(fileData)
+fileOut.write(result)
+
+file.close()
+fileOut.close()

@@ -1,11 +1,36 @@
 import ply.lex as lex
 
 
-tokens = ['LEX_T', 'YACC_T', 'LEFT', 'RIGHT', 'TS', 'CHAVS', 'FIM',
-            'CHAV_A', 'NEG', 'UMINUS', 'CHAV_F', 'TVALUE', 'QUOTES', 'PRINT',
-            'TVAR', 'TLSKIP', 'PERCENTAGEM', 'PARRETOA', 'PARRETOF', 'ASPAS', 
-            'PRECEDENCE_T', 'PLICA', 'LITERALS_T', 'IGNORE_T', 'TOKENS_T', 
-            'GETVAL', 'PALMA', 'PALMI', 'SPECIAL', 'REGEX', 'RETURN', 'ERROR'] 
+tokens = ['LEX_T', 
+            'YACC_T', 
+            'LEFT', 
+            'RIGHT', 
+            'TS', 
+            'CHAVS', 
+            'FIM',
+            'NEG', 
+            'UMINUS', 
+            'TVALUE', 
+            'QUOTES', 
+            'PRINT',
+            'TVAR', 
+            'TLSKIP', 
+            'PERCENTAGEM', 
+            'PARRETOA', 
+            'PARRETOF', 
+            'ASPAS', 
+            'PRECEDENCE_T', 
+            'PLICA', 
+            'LITERALS_T', 
+            'IGNORE_T', 
+            'TOKENS_T', 
+            'GETVAL', 
+            'PALMA', 
+            'PALMI', 
+            'SPECIAL', 
+            'REGEX', 
+            'RETURN', 
+            'ERROR'] 
 
 
 
@@ -22,25 +47,14 @@ def t_YACC_T(t):
     return t
 
 def t_TVALUE(t):
-    r',.*?t\.value.*?\)*' #!!! espaço antes do t.value para nao entrar em conflito com o return do error
+    r',.*?t\.value.*?\)*' 
     t.value = str(t.value)
     return t
 
 def t_CHAVS(t):
-    r'\{.*?\}' #!!! espaço antes do t.value para nao entrar em conflito com o return do error
+    r'\{.*?\}'
     t.value = str(t.value)
     return t
-
-
-#def t_CHAV_A(t):  #\t \n ou espaço
-#    r'{'
-#    t.value = str(t.value)
-#    return t
-
-#def t_CHAV_F(t):  #\t \n ou espaço
-#    r'}'
-#    t.value = str(t.value)
-#    return t
 
 def t_PRECEDENCE_T(t):
     r'precedence\ *'
@@ -77,7 +91,7 @@ def t_RIGHT(t):
     t.value = str(t.value)
     return t
 
-def t_NEG(t): #trquei o %prec por %neg para nao dar conflito com o %precedence
+def t_NEG(t): 
     r'neg\ *'
     t.value = str(t.value)
     return t
@@ -102,11 +116,6 @@ def t_GETVAL(t):
     r'getval'
     t.value = str(t.value)
     return t
-
-#def t_IGUAL(t):
-#    r'='
-#    t.value = str(t.value)
-#    return t
 
 def t_LITERALS_T(t):
     r'literals\ *'
@@ -133,12 +142,12 @@ def t_PERCENTAGEM(t):
     t.value = str(t.value)
     return t
 
-def t_TS(t):  #\t \n ou espaço
+def t_TS(t): 
     r'ts'
     t.value = str(t.value)
     return t 
 
-def t_TVAR(t):  #\t \n ou espaço
+def t_TVAR(t):  
     r't\[\d\]'
     t.value = str(t.value)
     return t 
@@ -164,7 +173,7 @@ def t_PALMA(t): #PALMA -> palavra maiuscula
     t.value = str(t.value)
     return t
 
-def t_PALMI(t): #PALMI -> palavra maiuscula
+def t_PALMI(t): #PALMI -> palavra minuscula
     r'[a-z]+'
     t.value = str(t.value)
     return t
@@ -174,9 +183,7 @@ def t_SPECIAL(t):  #\t \n ou espaço
     t.value = str(t.value)
     return t
 
-def t_REGEX(t): #regex para reconhecer uma regex valida
-    #r'^((?:(?:[^?+*{}()[\]\\|]+|\\.|\[(?:\^?\\.|\^[^\\]|[^\\^])(?:[^\]\\]+|\\.)*\]|\((?:\?[:=!]|\?<[=!]|\?>)?\(?1\)??\)|\(\?(?:R|[+-]?\d+)\))(?:(?:[?+*]|\{\d*(?:,\d*)?\})[?+]?)?|\|)*)$'
-    #r'[?\w+]?\w+'
+def t_REGEX(t):
     r'@.+@'
     t.value = str(t.value)
     return t
