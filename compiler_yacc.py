@@ -5,7 +5,8 @@ from compiler_lex import literals
 
 def p_body(p):
     "body : lex yacc funcoes"
-    p[0] = p[1] + "\n" + p[2] +"\n" + p[3]
+    #p[0] = p[1] + "\n" + p[2] +"\n" + p[3]
+    p[0] = (p[1], p[2]+p[3])
 
 
 
@@ -97,7 +98,7 @@ def p_regra_error(p):
 
 def p_yacc(p):
     "yacc : PERCENTAGEM PERCENTAGEM YACC_T precedence symboltable regras_y"
-    p[0] = p[6]
+    p[0] = "import ply.yacc as yacc\n\n" + p[5] + "\n\n" + p[6]
 
 def p_palavra(p):
     """palavra : PALMI
@@ -137,6 +138,7 @@ def p_lado_r(p):
 
 def p_symboltable(p):
     "symboltable : TS '=' CHAVS"
+    p[0] = p[1] + p[2] + p[3]
 
 
 def p_regra_y(p):
@@ -206,22 +208,21 @@ parser.gramaticas = {}
 #    #print(result)
 
 
-q = 0
+#q = 0
 
-while q == 0:
-    inputFile = input('File to read >> ')
-    try:
-        file = open(inputFile, 'r')
-        q = 1
-    except OSError:
-        print('Ficheiro inválido')
+#while q == 0:
+inputFile = input('File to read >> ')
+try:
+    with open(inputFile) as f:
+        data_input = f.read()
+    result = parser.parse(data_input)
+        
+    fileOutput = input('Output file >> ')
+    with open(f"{fileOutput}_lex.py","w") as f:
+        f.write(result[0])
+    with open(f"{fileOutput}_yacc.py","w") as f:
+        f.write(result[1])
 
-fileOutput = input('Output file >> ')
-fileOut = open(fileOutput, 'w+')
+except OSError:
+    print('Ficheiro inválido')
 
-fileData = file.read()
-result = parser.parse(fileData)
-fileOut.write(result)
-
-file.close()
-fileOut.close()
